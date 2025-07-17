@@ -23,8 +23,6 @@ export function useProjects() {
     limit: 12
   })
 
-  const searchHistory = ref<string[]>([])
-
   const loadProjects = async () => {
     loading.value = true
     error.value = null
@@ -44,23 +42,6 @@ export function useProjects() {
       console.error('Error loading projects:', err)
     } finally {
       loading.value = false
-    }
-  }
-
-  const loadSearchHistory = async () => {
-    try {
-      searchHistory.value = await ProjectService.getSearchHistory()
-    } catch (err) {
-      console.error('Error loading search history:', err)
-    }
-  }
-
-  const clearSearchHistory = async () => {
-    try {
-      await ProjectService.clearSearchHistory()
-      searchHistory.value = []
-    } catch (err) {
-      console.error('Error clearing search history:', err)
     }
   }
 
@@ -154,7 +135,6 @@ export function useProjects() {
     error,
     paginationInfo,
     filters,
-    searchHistory,
 
     hasProjects,
     totalProjects,
@@ -162,8 +142,6 @@ export function useProjects() {
     totalPages,
 
     loadProjects,
-    loadSearchHistory,
-    clearSearchHistory,
     toggleFavorite,
     deleteProject,
     setSearch,

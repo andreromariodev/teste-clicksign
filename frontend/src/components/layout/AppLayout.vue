@@ -8,11 +8,7 @@
               <img :src="logoUrl" :alt="'Logo Gerenciador de Projetos'" :class="$style.logoImg" />
             </router-link>
           </div>
-          <nav :class="$style.nav">
-            <router-link to="/projects/new" :class="[$style.navLink, $style.btnPrimary]">
-              Novo Projeto
-            </router-link>
-          </nav>
+          <GlobalSearch />
         </div>
       </div>
     </header>
@@ -26,6 +22,7 @@
 
 <script setup lang="ts">
 import logoUrl from '@/assets/logo-projeto-sg.svg'
+import GlobalSearch from '@/components/ui/GlobalSearch.vue'
 </script>
 
 <style module>
@@ -37,10 +34,10 @@ import logoUrl from '@/assets/logo-projeto-sg.svg'
 
 .header {
   background: #1C1930;
-  border-bottom: 1px solid var(--color-border-primary);
   position: sticky;
   top: 0;
   z-index: 100;
+  box-shadow: 0px 4px 4px 0px #00000040;
 }
 
 .headerContent {
@@ -48,6 +45,10 @@ import logoUrl from '@/assets/logo-projeto-sg.svg'
   justify-content: space-between;
   align-items: center;
   padding: var(--spacing-lg) 0;
+}
+
+.logo {
+  margin: 0 auto;
 }
 
 .logo h1 {

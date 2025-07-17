@@ -19,10 +19,10 @@
                 :class="$style.checkbox"
               />
               <span :class="$style.toggleText"></span>
-            </label>
               <span>
                 Apenas Favoritos
               </span>
+            </label>
             <div :class="$style.sortSection">
               <select
                 :value="sortBy"
@@ -39,16 +39,6 @@
               Novo projeto
             </router-link>
           </div>
-        </div>
-
-        <!-- Search -->
-        <div :class="$style.searchSection">
-          <ProjectSearch
-            v-model="searchTerm"
-            :search-history="searchHistory"
-            @search="onSearch"
-            @clear-history="clearSearchHistory"
-          />
         </div>
 
         <!-- Loading State -->
@@ -103,9 +93,9 @@
           :total="totalProjects"
           :has-next-page="paginationInfo.hasNextPage"
           :has-prev-page="paginationInfo.hasPrevPage"
-          @next="nextPage"
-          @prev="prevPage"
-          @goto="setPage"
+          @next="goToNextPage"
+          @prev="goToPrevPage"
+          @goto="goToPage"
         />
 
         <!-- Delete Confirmation Modal -->
@@ -126,28 +116,29 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, onMounted, watch } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import AppLayout from '@/components/layout/AppLayout.vue'
 import ProjectCard from '@/components/project/ProjectCard.vue'
 import ProjectSearch from '@/components/project/ProjectSearch.vue'
 import Pagination from '@/components/ui/Pagination.vue'
 import ConfirmModal from '@/components/ui/ConfirmModal.vue'
 import { useProjects } from '@/composables/useProjects'
+import { useSearchHistory } from '@/composables/useSearchHistory'
+
+const route = useRoute()
+const router = useRouter()
 
 const {
   projects,
   loading,
   error,
   paginationInfo,
-  searchHistory,
   hasProjects,
   totalProjects,
   currentPage,
   totalPages,
   loadProjects,
-  loadSearchHistory,
-  clearSearchHistory,
   toggleFavorite,
   deleteProject,
   setSearch,
@@ -157,6 +148,8 @@ const {
   nextPage,
   prevPage
 } = useProjects()
+
+const { searchHistory, addToHistory, clearHistory } = useSearchHistory()
 
 const searchTerm = ref('')
 const onlyFavorites = ref(false)
@@ -170,17 +163,76 @@ const deleteModal = ref({
 })
 
 const onSearch = (term: string) => {
+  searchTerm.value = term
   setSearch(term)
+
+  // Adicionar ao histórico se tiver pelo menos 3 caracteres
+  if (term.trim().length >= 3) {
+    addToHistory(term.trim())
+  }
+
+  // Atualizar a URL
+  const query = { ...route.query }
+  if (term) {
+    query.search = term
+  } else {
+    delete query.search
+  }
+  query.page = '1' // Reset para primeira página
+
+  router.push({ query })
 }
 
 const onToggleFavorites = (event: Event) => {
   const target = event.target as HTMLInputElement
+  onlyFavorites.value = target.checked
   setOnlyFavorites(target.checked)
+
+  // Atualizar a URL
+  const query = { ...route.query }
+  if (target.checked) {
+    query.favorites = 'true'
+  } else {
+    delete query.favorites
+  }
+  query.page = '1' // Reset para primeira página
+
+  router.push({ query })
 }
 
 const onSortChange = (event: Event) => {
   const target = event.target as HTMLSelectElement
-  setSorting(target.value as 'name' | 'startDate' | 'endDate', 'asc')
+  sortBy.value = target.value as 'name' | 'startDate' | 'endDate'
+  setSorting(sortBy.value, 'asc')
+
+  // Atualizar a URL
+  const query = { ...route.query }
+  query.sort = sortBy.value
+  query.page = '1' // Reset para primeira página
+
+  router.push({ query })
+}
+
+const clearSearchHistory = () => {
+  clearHistory()
+}
+
+// Funções de navegação que atualizam a URL
+const goToPage = (page: number) => {
+  const query = { ...route.query, page: page.toString() }
+  router.push({ query })
+}
+
+const goToNextPage = () => {
+  if (paginationInfo.value.hasNextPage) {
+    goToPage(currentPage.value + 1)
+  }
+}
+
+const goToPrevPage = () => {
+  if (paginationInfo.value.hasPrevPage) {
+    goToPage(currentPage.value - 1)
+  }
 }
 
 const showDeleteModal = (projectId: string) => {
@@ -211,11 +263,57 @@ const confirmDelete = async () => {
   }
 }
 
+// Observar mudanças na rota para sincronizar o estado
+watch(() => route.query, (newQuery) => {
+  // Sincronizar busca
+  const searchFromUrl = (newQuery.search as string) || ''
+  if (searchFromUrl !== searchTerm.value) {
+    searchTerm.value = searchFromUrl
+    setSearch(searchFromUrl)
+  }
+
+  // Sincronizar favoritos
+  const favoritesFromUrl = newQuery.favorites === 'true'
+  if (favoritesFromUrl !== onlyFavorites.value) {
+    onlyFavorites.value = favoritesFromUrl
+    setOnlyFavorites(favoritesFromUrl)
+  }
+
+  // Sincronizar ordenação
+  const sortFromUrl = (newQuery.sort as string) || 'name'
+  const validSorts = ['name', 'startDate', 'endDate'] as const
+  const sortValue = validSorts.includes(sortFromUrl as any) ? sortFromUrl as 'name' | 'startDate' | 'endDate' : 'name'
+  if (sortValue !== sortBy.value) {
+    sortBy.value = sortValue
+    setSorting(sortBy.value, 'asc')
+  }
+
+  // Sincronizar página
+  const pageFromUrl = parseInt((newQuery.page as string) || '1')
+  if (pageFromUrl !== currentPage.value) {
+    setPage(pageFromUrl)
+  }
+}, { immediate: true })
+
 onMounted(async () => {
-  await Promise.all([
-    loadProjects(),
-    loadSearchHistory()
-  ])
+  // Inicializar valores da URL
+  const query = route.query
+  searchTerm.value = (query.search as string) || ''
+  onlyFavorites.value = query.favorites === 'true'
+
+  // Validar sort da URL
+  const sortFromUrl = (query.sort as string) || 'name'
+  const validSorts = ['name', 'startDate', 'endDate'] as const
+  sortBy.value = validSorts.includes(sortFromUrl as any) ? sortFromUrl as 'name' | 'startDate' | 'endDate' : 'name'
+
+  // Aplicar os filtros
+  setSearch(searchTerm.value)
+  setOnlyFavorites(onlyFavorites.value)
+  setSorting(sortBy.value, 'asc')
+  setPage(parseInt((query.page as string) || '1'))
+
+  // Carregar projetos
+  await loadProjects()
 })
 </script>
 

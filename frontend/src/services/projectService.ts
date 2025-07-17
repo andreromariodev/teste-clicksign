@@ -89,13 +89,4 @@ export class ProjectService {
     const response = await api.patch(`/projects/${id}/favorite`)
     return response.data
   }
-
-  static async getSearchHistory(): Promise<string[]> {
-    const response = await api.get('/search-history')
-    return response.data
-  }
-
-  static async clearSearchHistory(): Promise<void> {
-    await api.delete('/search-history')
-  }
 }
