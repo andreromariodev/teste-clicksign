@@ -1,11 +1,72 @@
+
+<!--
+  Este projeto foi desenvolvido como teste para a vaga de Desenvolvedor Front-end Sênior na Clicksign.
+  Autor: André Romário
+  Portfólio: http://andreromariodev.github.io/
+  LinkedIn: https://www.linkedin.com/in/andre-romario-dev/
+-->
+
 # Gerenciador de Projetos
 
-Sistema completo para gerenciamento de projetos com Vue 3 + TypeScript no frontend e Node.js + Express no backend.
+Sistema completo para gerenciamento de projetos com Vue 3 + TypeScript no frontend e Node.js + Express + MongoDB no backend.
+
+## 📋 Pré-requisitos
+
+Antes de iniciar o projeto, certifique-se de ter instalado:
+
+- **Node.js 18+** (recomendado Node.js 22+)
+- **MongoDB** (instalado e configurado)
+- **npm** (ou yarn)
+- **Git** (para clonar o repositório)
+
+### Instalação do MongoDB
+
+#### Ubuntu/Debian:
+```bash
+# Importar chave pública do MongoDB
+wget -qO - https://www.mongodb.org/static/pgp/server-7.0.asc | sudo apt-key add -
+
+# Adicionar repositório MongoDB
+echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
+
+# Atualizar pacotes e instalar MongoDB
+sudo apt-get update
+sudo apt-get install -y mongodb-org
+
+# Iniciar MongoDB
+sudo systemctl start mongod
+sudo systemctl enable mongod
+
+# Verificar se está rodando
+sudo systemctl status mongod
+```
+
+#### macOS:
+```bash
+# Usando Homebrew
+brew tap mongodb/brew
+brew install mongodb-community
+
+# Iniciar MongoDB
+brew services start mongodb/brew/mongodb-community
+```
+
+#### Windows:
+- Baixe o instalador do MongoDB Community Server em: https://www.mongodb.com/try/download/community
+- Siga as instruções de instalação
+- Inicie o serviço MongoDB
 
 ## 🚀 Início Rápido
 
 ### Automação Completa
 ```bash
+# Clonar o repositório
+git clone <url-do-repositorio>
+cd teste-clicksign
+
+# Tornar scripts executáveis
+chmod +x start.sh stop.sh dev.sh
+
 # Iniciar o projeto (backend + frontend)
 ./start.sh
 
@@ -71,25 +132,33 @@ Sistema completo para gerenciamento de projetos com Vue 3 + TypeScript no fronte
 - **Capa do projeto** (imagem, opcional)
 - **Favorito** (boolean)
 
-## 🛠️ Tecnologias Utilizadas
+## 🛠️ Tecnologias e Dependências
 
 ### Backend
-- Node.js 18+
-- Express 4.19.2
-- TypeScript
-- **MongoDB + Mongoose** (banco de dados)
-- tsx (execução TypeScript)
-- multer (upload de arquivos)
-- cors (CORS)
-- dotenv (variáveis de ambiente)
+- **Node.js** 18+ (testado com Node 22+)
+- **Express** 4.19.2 (framework web)
+- **TypeScript** 5.8.3 (tipagem estática)
+- **MongoDB** + **Mongoose** 8.16.4 (banco de dados)
+- **tsx** 4.20.3 (execução TypeScript em desenvolvimento)
+- **multer** 2.0.1 (upload de arquivos)
+- **cors** 2.8.5 (Cross-Origin Resource Sharing)
+- **dotenv** 17.2.0 (variáveis de ambiente)
+- **uuid** 11.1.0 (geração de IDs únicos)
 
 ### Frontend
-- Vue 3 (Composition API)
-- TypeScript
-- Vue Router
-- Vite
-- axios (HTTP client)
-- CSS Modules
+- **Vue 3** 3.5.17 (framework frontend com Composition API)
+- **TypeScript** 5.8.0 (tipagem estática)
+- **Vue Router** 4.5.1 (roteamento SPA)
+- **Vite** 7.0.0 (build tool e dev server)
+- **axios** 1.10.0 (cliente HTTP)
+- **CSS Modules** (estilização modular)
+- **ESLint** + **Prettier** (qualidade e formatação de código)
+
+### DevDependencies Principais
+- **@types/*** (tipagens TypeScript)
+- **nodemon** 3.1.10 (hot reload backend)
+- **vite-plugin-vue-devtools** (ferramentas de desenvolvimento Vue)
+- **npm-run-all2** (execução paralela de scripts)
 
 ## 📁 Estrutura do Projeto
 
@@ -177,24 +246,15 @@ GET /api/projects?search=projeto&favorites=true&sortBy=name&page=1&limit=10
 
 ## 💻 Desenvolvimento
 
-### Pré-requisitos
-- Node.js 18+
-- **MongoDB** (instalado e rodando)
-- npm ou yarn
+### Instalação e Configuração
 
-### Configuração do Banco de Dados
+#### 1. Clonar o Repositório
 ```bash
-# Iniciar MongoDB (Ubuntu/Debian)
-sudo systemctl start mongod
-
-# Verificar status
-sudo systemctl status mongod
-
-# Habilitar inicialização automática
-sudo systemctl enable mongod
+git clone <url-do-repositorio>
+cd teste-clicksign
 ```
 
-### Variáveis de Ambiente
+#### 2. Configurar Variáveis de Ambiente
 Crie um arquivo `.env` no diretório `backend/`:
 ```env
 NODE_ENV=development
@@ -204,119 +264,212 @@ UPLOAD_DIR=uploads
 MAX_FILE_SIZE=5242880
 ```
 
-### Instalação Manual
+#### 3. Instalar Dependências
+
+##### Automática (Recomendado):
 ```bash
-# Instalar dependências do backend
+./dev.sh install
+```
+
+##### Manual:
+```bash
+# Backend
 cd backend
 npm install
 
-# Instalar dependências do frontend
+# Frontend
 cd ../frontend
 npm install
 ```
 
-### Execução Manual
+### Execução do Projeto
+
+#### Automática (Recomendado):
 ```bash
-# Iniciar backend (porta 3001)
+# Iniciar tudo
+./start.sh
+
+# Ou usar utilitários de desenvolvimento
+./dev.sh start
+```
+
+#### Manual:
+```bash
+# Terminal 1: Backend (porta 3001)
 cd backend
 npm run dev
 
-# Em outro terminal, iniciar frontend (porta 5173)
+# Terminal 2: Frontend (porta 5173)
 cd frontend
 npm run dev
 ```
 
+### URLs de Acesso
+- **Frontend**: http://localhost:5173
+- **Backend API**: http://localhost:3001
+- **Health Check**: http://localhost:3001/health
+- **Uploads**: http://localhost:3001/uploads/[filename]
+
+## 🔧 Scripts Disponíveis
+
+### Scripts de Automação
+- `./start.sh` - Inicia projeto completo (MongoDB + Backend + Frontend)
+- `./stop.sh` - Para todos os serviços
+- `./dev.sh [comando]` - Utilitários de desenvolvimento
+
+### Comandos do dev.sh
+- `./dev.sh start` - Inicia backend e frontend
+- `./dev.sh stop` - Para todos os serviços
+- `./dev.sh restart` - Reinicia todos os serviços
+- `./dev.sh backend` - Inicia apenas o backend
+- `./dev.sh frontend` - Inicia apenas o frontend
+- `./dev.sh logs` - Mostra logs em tempo real
+- `./dev.sh clean` - Limpa node_modules e reinstala dependências
+- `./dev.sh build` - Build de produção
+- `./dev.sh status` - Mostra status dos serviços
+- `./dev.sh install` - Instala/atualiza dependências
+
+### Backend (package.json)
+- `npm run dev` - Desenvolvimento com hot reload (tsx watch)
+- `npm run build` - Build TypeScript para produção
+- `npm start` - Executa versão compilada
+
+### Frontend (package.json)
+- `npm run dev` - Servidor de desenvolvimento Vite
+- `npm run build` - Build para produção (Vue + Vite)
+- `npm run preview` - Preview da build de produção
+- `npm run type-check` - Verificação de tipos TypeScript
+- `npm run lint` - ESLint com correção automática
+- `npm run format` - Formatação com Prettier
+
+## 📝 Notas de Desenvolvimento
+
+- **Dados persistidos no MongoDB** (banco de dados real)
+- Uploads salvos na pasta `backend/uploads/`
+- **CSS Modules** usado para estilização (não Tailwind)
+- Estrutura modular e escalável
+- Tratamento de erros consistente
+- Validação de dados no backend e frontend
+- Seed automático de projetos exemplo
+- Histórico de busca salvo no banco MongoDB
+- Índices otimizados para performance de busca
+- Hot reload habilitado em desenvolvimento
+- Build otimizado para produção
+
+## 🐛 Solução de Problemas
+
+### Problemas Comuns
+
+#### MongoDB não conecta
+```bash
+# Verificar status
+sudo systemctl status mongod
+
+# Iniciar se necessário
+sudo systemctl start mongod
+
+# Habilitar inicialização automática
+sudo systemctl enable mongod
+```
+
+#### Porta já está em uso
+```bash
+# Parar todos os serviços
+./dev.sh stop
+
+# Ou usar stop.sh
+./stop.sh
+
+# Verificar processos nas portas
+lsof -i :3001  # Backend
+lsof -i :5173  # Frontend
+```
+
+#### Erro de dependências
+```bash
+# Limpeza completa e reinstalação
+./dev.sh clean
+
+# Ou manualmente
+rm -rf backend/node_modules frontend/node_modules
+rm -f backend/package-lock.json frontend/package-lock.json
+cd backend && npm install
+cd ../frontend && npm install
+```
+
+#### Build falha
+```bash
+# Verificar tipos TypeScript
+cd frontend && npm run type-check
+cd backend && npm run build
+
+# Verificar lint
+cd frontend && npm run lint
+```
+
+### Comandos de Diagnóstico
+```bash
+# Status completo dos serviços
+./dev.sh status
+
+# Logs em tempo real
+./dev.sh logs
+
+# Verificar saúde da API
+curl http://localhost:3001/health
+
+# Verificar MongoDB
+mongosh --eval "db.adminCommand('ismaster')"
+```
+
+## 🚀 Build e Deploy
+
 ### Build de Produção
 ```bash
-# Usar script automatizado
+# Automático
 ./dev.sh build
 
-# Ou manualmente:
+# Manual
 cd backend && npm run build
 cd frontend && npm run build
 ```
 
-## 📝 Notas de Desenvolvimento
+### Estrutura após Build
+```
+backend/dist/          # JavaScript compilado
+frontend/dist/         # Assets estáticos otimizados
+```
 
-- **Dados persistidos no MongoDB** (banco real)
-- Uploads salvos na pasta `backend/uploads/`
-- CSS Modules usado em vez de Tailwind
-- Estrutura modular e escalável
-- Tratamento de erros consistente
-- Validação de dados no backend e banco
-- Seed automático de 5 projetos exemplo
-- Histórico de busca salvo no banco
-- Índices otimizados para performance
+## 🎯 Roadmap e Melhorias
 
-## 🎯 Próximos Passos
+### Implementado ✅
+- [x] CRUD completo de projetos
+- [x] Sistema de favoritos
+- [x] Upload de imagens
+- [x] Busca com histórico
+- [x] Paginação
+- [x] Filtros e ordenação
+- [x] Persistência MongoDB
+- [x] CSS Modules
+- [x] TypeScript completo
+- [x] Scripts de automação
+- [x] Tratamento de erros
 
-- [x] ~~Implementar banco de dados~~ ✅ **MongoDB configurado**
-- [ ] Adicionar testes unitários
-- [ ] Sistema de autenticação
-- [ ] Deploy automatizado
-- [ ] Documentação da API (Swagger)
-- [ ] Logs estruturados
-- [ ] Monitoramento de performance
-- [ ] Backup automático do banco
-
-## 📞 Suporte
-
-Para dúvidas ou problemas:
-1. Verifique o status: `./dev.sh status`
-2. Veja os logs: `./dev.sh logs`
-3. Reinicie os serviços: `./dev.sh restart`
-4. Limpe e reinstale: `./dev.sh clean`
-
-### Problemas Comuns
-- **MongoDB não conecta**: Verifique se está rodando com `sudo systemctl status mongod`
-- **Porta 3001 ocupada**: Use `./dev.sh stop` para parar todos os serviços
-- **Erro de dependências**: Execute `./dev.sh clean` para reinstalar tudo
+### Próximos Passos 📋
+- [ ] Testes unitários e e2e (Jest + Vitest)
+- [ ] Sistema de autenticação JWT
+- [ ] Documentação da API (Swagger/OpenAPI)
+- [ ] Logs estruturados (Winston)
+- [ ] Cache Redis para performance
+- [ ] Otimização de imagens (Sharp)
+- [ ] PWA (Service Workers)
+- [ ] Docker e Docker Compose
+- [ ] CI/CD com GitHub Actions
+- [ ] Monitoramento (Prometheus/Grafana)
+- [ ] Backup automático MongoDB
 
 ---
 
-✨ **Projeto criado com Vue 3 + TypeScript + Node.js + Express + MongoDB**
-
-🎉 **Agora com persistência real de dados no MongoDB!**
-- **Pagination** - Paginação da listagem  
-- **ConfirmModal** - Modal de confirmação para exclusões
-- **AppLayout** - Layout base da aplicação
-
-## 🎯 Próximos Passos
-
-### Possíveis Melhorias
-- [ ] Persistência em banco de dados (atualmente em memória)
-- [ ] Autenticação e autorização
-- [ ] Testes unitários e e2e
-- [ ] Cache de requisições
-- [ ] Otimização de imagens
-- [ ] PWA (Progressive Web App)
-- [ ] Docker para containerização
-- [ ] Deploy automatizado
-
-## 🔧 Scripts Disponíveis
-
-### Backend
-- `npm run dev` - Desenvolvimento com hot reload
-- `npm run build` - Build para produção
-- `npm start` - Executa versão de produção
-
-### Frontend
-- `npm run dev` - Servidor de desenvolvimento
-- `npm run build` - Build para produção
-- `npm run preview` - Preview da build
-- `npm run lint` - Executa ESLint
-- `npm run format` - Formata código com Prettier
-
-## 📝 Notas
-
-- O projeto usa **CSS Modules** conforme solicitado (não Tailwind)
-- As imagens são salvas na pasta `backend/uploads/`
-- O histórico de busca é mantido em memória (reinicia ao reiniciar o servidor)
-- Dados de exemplo são criados automaticamente na inicialização
-- A validação é feita tanto no frontend quanto no backend
-
-## 🐛 Problemas Conhecidos
-
-- Dados são perdidos ao reiniciar o servidor (não há persistência)
-- Upload de imagens não tem redimensionamento automático
-- Busca é case-insensitive mas não aceita acentos ou caracteres especiais
+✨ **Gerenciador de Projetos**  
+**Stack**: Vue 3 + TypeScript + Node.js + Express + MongoDB  
+**Arquitetura**: Modular, Escalável, Full TypeScript

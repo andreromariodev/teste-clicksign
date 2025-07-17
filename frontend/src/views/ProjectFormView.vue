@@ -184,11 +184,13 @@ import { useRoute, useRouter } from 'vue-router'
 import AppLayout from '@/components/layout/AppLayout.vue'
 import { ProjectService } from '@/services/projectService'
 import { useFormatting } from '@/composables/useFormatting'
+import { useToast } from '@/composables/useToast'
 import type { CreateProjectDto, UpdateProjectDto } from '@/types/project'
 
 const route = useRoute()
 const router = useRouter()
 const { formatDateInput } = useFormatting()
+const { showError, showSuccess } = useToast()
 
 const isEditing = computed(() => !!route.params.id)
 const loading = ref(false)
@@ -331,6 +333,10 @@ const loadProject = async () => {
     }
   } catch (err) {
     submitError.value = 'Erro ao carregar projeto'
+    showError(
+      'Erro ao carregar projeto',
+      'Não foi possível carregar os dados do projeto. Tente novamente.'
+    )
     console.error('Error loading project:', err)
   } finally {
     loading.value = false
@@ -355,6 +361,10 @@ const onSubmit = async () => {
       }
 
       await ProjectService.updateProject(route.params.id as string, updateData)
+      showSuccess(
+        'Projeto atualizado',
+        'As alterações foram salvas com sucesso.'
+      )
     } else {
       const createData: CreateProjectDto = {
         name: form.value.name,
@@ -365,11 +375,19 @@ const onSubmit = async () => {
       }
 
       await ProjectService.createProject(createData)
+      showSuccess(
+        'Projeto criado',
+        'O novo projeto foi criado com sucesso.'
+      )
     }
 
     router.push('/')
   } catch (err: any) {
     submitError.value = err.response?.data?.error || 'Erro ao salvar projeto'
+    showError(
+      isEditing.value ? 'Erro ao atualizar projeto' : 'Erro ao criar projeto',
+      err.response?.data?.error || 'Não foi possível salvar o projeto. Tente novamente.'
+    )
     console.error('Error saving project:', err)
   } finally {
     loading.value = false

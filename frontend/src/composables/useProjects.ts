@@ -1,8 +1,10 @@
 import { ref, computed, watch } from 'vue'
 import { ProjectService } from '@/services/projectService'
+import { useToast } from '@/composables/useToast'
 import type { Project, ProjectFilters, PaginatedResponse } from '@/types/project'
 
 export function useProjects() {
+  const { showError, showSuccess } = useToast()
   const projects = ref<Project[]>([])
   const loading = ref(false)
   const error = ref<string | null>(null)
@@ -39,6 +41,10 @@ export function useProjects() {
       }
     } catch (err) {
       error.value = 'Erro ao carregar projetos'
+      showError(
+        'Erro ao carregar projetos',
+        'Não foi possível carregar a lista de projetos. Tente novamente.'
+      )
       console.error('Error loading projects:', err)
     } finally {
       loading.value = false
@@ -69,6 +75,10 @@ export function useProjects() {
       }
     } catch (err) {
       error.value = 'Erro ao atualizar favorito'
+      showError(
+        'Erro ao atualizar favorito',
+        'Não foi possível alterar o status de favorito. Tente novamente.'
+      )
       console.error('Error toggling favorite:', err)
     }
   }
@@ -77,9 +87,14 @@ export function useProjects() {
     try {
       await ProjectService.deleteProject(id)
       projects.value = projects.value.filter(p => p.id !== id)
+      showSuccess('Projeto excluído', 'O projeto foi removido com sucesso.')
       await loadProjects()
     } catch (err) {
       error.value = 'Erro ao excluir projeto'
+      showError(
+        'Erro ao excluir projeto',
+        'Não foi possível excluir o projeto. Tente novamente.'
+      )
       console.error('Error deleting project:', err)
     }
   }
