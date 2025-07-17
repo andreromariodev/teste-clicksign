@@ -1,10 +1,7 @@
-
-<!--
-  Este projeto foi desenvolvido como teste para a vaga de Desenvolvedor Front-end Sênior na Clicksign.
-  Autor: André Romário
-  Portfólio: http://andreromariodev.github.io/
-  LinkedIn: https://www.linkedin.com/in/andre-romario-dev/
--->
+- Este projeto foi desenvolvido como teste para a vaga de Desenvolvedor Front-end Sênior na Clicksign.
+- Autor: André Romário
+- Portfólio: http://andreromariodev.github.io/
+- LinkedIn: https://www.linkedin.com/in/andre-romario-dev/
 
 # Gerenciador de Projetos
 
