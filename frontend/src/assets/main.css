@@ -24,3 +24,7 @@ a,
   background: #FFB23D;
   color: #FFF;
 }
+
+strong {
+  font-weight: bold;
+}

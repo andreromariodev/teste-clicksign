@@ -24,11 +24,7 @@
         </div>
       </div>
       <div :class="$style.mainActions">
-        <button
-          :class="$style.favoriteBtn"
-          @click="onToggleFavorite"
-          title="Favoritar projeto"
-        >
+        <button :class="$style.favoriteBtn" @click="onToggleFavorite" title="Favoritar projeto">
           <svg
             v-if="project.isFavorite"
             width="30"
@@ -120,7 +116,11 @@
                 <feGaussianBlur stdDeviation="2" />
                 <feComposite in2="hardAlpha" operator="out" />
                 <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
-                <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_2843_18" />
+                <feBlend
+                  mode="normal"
+                  in2="BackgroundImageFix"
+                  result="effect1_dropShadow_2843_18"
+                />
                 <feBlend
                   mode="normal"
                   in="SourceGraphic"
@@ -147,9 +147,30 @@
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <circle cx="12" cy="12" r="1" stroke="currentColor" stroke-width="2" fill="currentColor" />
-                <circle cx="12" cy="5" r="1" stroke="currentColor" stroke-width="2" fill="currentColor" />
-                <circle cx="12" cy="19" r="1" stroke="currentColor" stroke-width="2" fill="currentColor" />
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="1"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  fill="currentColor"
+                />
+                <circle
+                  cx="12"
+                  cy="5"
+                  r="1"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  fill="currentColor"
+                />
+                <circle
+                  cx="12"
+                  cy="19"
+                  r="1"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  fill="currentColor"
+                />
               </svg>
             </button>
 
@@ -172,7 +193,14 @@
                     stroke-width="2"
                     fill="none"
                   />
-                  <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" fill="none" />
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="3"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    fill="none"
+                  />
                 </svg>
                 Ver
               </router-link>
@@ -203,10 +231,7 @@
                 Editar
               </router-link>
 
-              <button
-                :class="[$style.dropdownItem, $style.deleteItem]"
-                @click="handleDelete"
-              >
+              <button :class="[$style.dropdownItem, $style.deleteItem]" @click="handleDelete">
                 <svg
                   width="16"
                   height="16"
@@ -231,15 +256,74 @@
 
     <div :class="$style.cardBody">
       <h3 :class="$style.projectName" v-html="highlightText(project.name, searchTerm || '')"></h3>
-      <p :class="$style.clientName" v-html="highlightText(project.client, searchTerm || '')"></p>
+      <p :class="$style.clientName">
+        <strong>Cliente: </strong>
+        <span v-html="highlightText(project.client, searchTerm || '')"></span>
+      </p>
 
       <div :class="$style.dates">
         <div :class="$style.dateItem">
-          <span :class="$style.dateLabel">Início:</span>
+          <span :class="$style.dateLabel">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <mask
+                id="mask0_2843_860"
+                style="mask-type: luminance"
+                maskUnits="userSpaceOnUse"
+                x="2"
+                y="0"
+                width="21"
+                height="24"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M18.5 3H20.75C21.9927 3 23 4.00734 23 5.25V21.75C23 22.9927 21.9927 24 20.75 24H4.25C3.00734 24 2 22.9927 2 21.75V5.25C2 4.00734 3.00734 3 4.25 3H6.5V0.5625C6.5 0.251859 6.75186 0 7.0625 0H7.4375C7.74814 0 8 0.251859 8 0.5625V3H17V0.5625C17 0.251859 17.2519 0 17.5625 0H17.9375C18.2481 0 18.5 0.251859 18.5 0.5625V3ZM20.7505 4.5H4.25049C3.83696 4.5 3.50049 4.83647 3.50049 5.25V7.5H21.5005V5.25C21.5005 4.83647 21.164 4.5 20.7505 4.5ZM20.7505 22.5H4.25049C3.83696 22.5 3.50049 22.1635 3.50049 21.75V9H21.5005V21.75C21.5005 22.1635 21.164 22.5 20.7505 22.5ZM11.3122 19.63L17.6305 13.3623C17.8512 13.1434 17.8527 12.7869 17.6337 12.5662L17.2372 12.1665C17.0182 11.9457 16.6618 11.9443 16.441 12.1633L10.92 17.64L8.55554 15.2688C8.33602 15.0486 7.97958 15.0481 7.75941 15.2676L7.36074 15.6651C7.14062 15.8847 7.1401 16.2411 7.35962 16.4613L10.517 19.6278C10.7362 19.8476 11.0919 19.8485 11.3122 19.63Z"
+                  fill="white"
+                />
+              </mask>
+              <g mask="url(#mask0_2843_860)">
+                <rect width="24" height="24" transform="translate(2)" fill="#717171" />
+              </g>
+            </svg>
+          </span>
           <span :class="$style.dateValue">{{ formatDate(project.startDate) }}</span>
         </div>
         <div :class="$style.dateItem">
-          <span :class="$style.dateLabel">Fim:</span>
+          <span :class="$style.dateLabel">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <mask
+                id="mask0_2843_860"
+                style="mask-type: luminance"
+                maskUnits="userSpaceOnUse"
+                x="2"
+                y="0"
+                width="21"
+                height="24"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M18.5 3H20.75C21.9927 3 23 4.00734 23 5.25V21.75C23 22.9927 21.9927 24 20.75 24H4.25C3.00734 24 2 22.9927 2 21.75V5.25C2 4.00734 3.00734 3 4.25 3H6.5V0.5625C6.5 0.251859 6.75186 0 7.0625 0H7.4375C7.74814 0 8 0.251859 8 0.5625V3H17V0.5625C17 0.251859 17.2519 0 17.5625 0H17.9375C18.2481 0 18.5 0.251859 18.5 0.5625V3ZM20.7505 4.5H4.25049C3.83696 4.5 3.50049 4.83647 3.50049 5.25V7.5H21.5005V5.25C21.5005 4.83647 21.164 4.5 20.7505 4.5ZM20.7505 22.5H4.25049C3.83696 22.5 3.50049 22.1635 3.50049 21.75V9H21.5005V21.75C21.5005 22.1635 21.164 22.5 20.7505 22.5ZM11.3122 19.63L17.6305 13.3623C17.8512 13.1434 17.8527 12.7869 17.6337 12.5662L17.2372 12.1665C17.0182 11.9457 16.6618 11.9443 16.441 12.1633L10.92 17.64L8.55554 15.2688C8.33602 15.0486 7.97958 15.0481 7.75941 15.2676L7.36074 15.6651C7.14062 15.8847 7.1401 16.2411 7.35962 16.4613L10.517 19.6278C10.7362 19.8476 11.0919 19.8485 11.3122 19.63Z"
+                  fill="white"
+                />
+              </mask>
+              <g mask="url(#mask0_2843_860)">
+                <rect width="24" height="24" transform="translate(2)" fill="#717171" />
+              </g>
+            </svg>
+          </span>
           <span :class="[$style.dateValue, getDeadlineClass()]">
             {{ formatDate(project.endDate) }}
           </span>
@@ -327,7 +411,7 @@ const handleDelete = () => {
 <style module>
 .projectCard {
   background: white;
-  border-radius: 12px;
+  border-radius: 16px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: all 0.2s ease;
@@ -371,7 +455,8 @@ const handleDelete = () => {
   bottom: 12px;
   right: 12px;
   display: flex;
-  gap: 8px;
+  align-items: center;
+  gap: 24px;
 }
 
 .favoriteBtn {
@@ -390,36 +475,36 @@ const handleDelete = () => {
 }
 
 .projectName {
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: #1e293b;
-  margin-bottom: 0.25rem;
-  line-height: 1.4;
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #1F1283;
+  margin-bottom: 0.5rem;
 }
 
 .clientName {
-  color: #64748b;
+  color: #717171;
   margin-bottom: 1rem;
-  font-size: 0.875rem;
 }
 
 .dates {
   margin-bottom: 0.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid #ECECEC;
 }
 
 .dateItem {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 0.25rem;
-  font-size: 0.875rem;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 1rem;
 }
 
 .dateLabel {
-  color: #64748b;
+  color: #717171;
 }
 
 .dateValue {
-  font-weight: 500;
+  font-weight: 400;
   color: #374151;
 }
 
@@ -459,8 +544,10 @@ const handleDelete = () => {
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
-  background: #f1f5f9;
+  background: #fff;
   color: #475569;
+  box-shadow: 0px 4px 4px 0px #00000040;
+  transform: rotate(-90deg);
 }
 
 .actionsToggle:hover {
