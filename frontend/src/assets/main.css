@@ -19,3 +19,8 @@ a,
     place-items: center;
   }
 }
+
+::selection {
+  background: #FFB23D;
+  color: #FFF;
+}
