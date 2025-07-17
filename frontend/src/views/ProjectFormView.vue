@@ -106,13 +106,33 @@
                         title="Remover imagem"
                       >
                         <svg
-                          width="16"
-                          height="16"
-                          viewBox="0 0 24 24"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 20 20"
                           fill="none"
                           xmlns="http://www.w3.org/2000/svg"
                         >
-                          <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" />
+                          <g clip-path="url(#clip0_43_2174)">
+                            <path
+                              d="M2.46143 4.9231H4.10245H17.2307"
+                              stroke="#695CCD"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
+                            <path
+                              d="M6.56408 4.92304V3.28202C6.56408 2.84679 6.73697 2.42939 7.04472 2.12164C7.35248 1.81388 7.76988 1.64099 8.2051 1.64099H11.4872C11.9224 1.64099 12.3398 1.81388 12.6475 2.12164C12.9553 2.42939 13.1282 2.84679 13.1282 3.28202V4.92304M15.5897 4.92304V16.4102C15.5897 16.8455 15.4168 17.2629 15.1091 17.5706C14.8013 17.8784 14.3839 18.0512 13.9487 18.0512H5.74356C5.30834 18.0512 4.89094 17.8784 4.58318 17.5706C4.27543 17.2629 4.10254 16.8455 4.10254 16.4102V4.92304H15.5897Z"
+                              stroke="#695CCD"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
+                          </g>
+                          <defs>
+                            <clipPath id="clip0_43_2174">
+                              <rect width="19.6923" height="19.6923" fill="white" />
+                            </clipPath>
+                          </defs>
                         </svg>
                       </button>
                     </div>
@@ -420,7 +440,7 @@ onMounted(() => {
 
 .label {
   font-weight: 500;
-  color: #695CCD;
+  color: #695ccd;
   margin-bottom: 0.5rem;
   font-size: 1.125rem;
   display: flex;
@@ -430,7 +450,7 @@ onMounted(() => {
 
 .required {
   color: #717171;
-  font-size: .85rem;
+  font-size: 0.85rem;
 }
 
 .input {
@@ -513,8 +533,8 @@ onMounted(() => {
 }
 
 .previewImage {
-  max-width: 200px;
-  max-height: 150px;
+  max-width: 100%;
+  max-height: 100%;
   border-radius: 8px;
   object-fit: cover;
 }
@@ -523,21 +543,20 @@ onMounted(() => {
   position: absolute;
   top: -8px;
   right: -8px;
-  background: #ef4444;
+  background: #ffffff;
+  box-shadow: 0px 4px 4px 0px #00000040;
   color: white;
   border: none;
   border-radius: 50%;
-  width: 24px;
-  height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s ease;
+  padding: 6px;
 }
 
 .removeImageBtn:hover {
-  background: #dc2626;
   transform: scale(1.1);
 }
 
@@ -583,7 +602,7 @@ onMounted(() => {
 
 .btn {
   padding: 0.75rem 1.5rem;
-  border-radius: 8px;
+  border-radius: 30px;
   font-weight: 500;
   text-decoration: none;
   display: flex;
@@ -594,6 +613,8 @@ onMounted(() => {
   border: none;
   justify-content: center;
   min-width: 120px;
+  width: 100%;
+  font-size: 1.25rem;
 }
 
 .btn:disabled {
@@ -616,7 +637,7 @@ onMounted(() => {
 }
 
 .btnPrimary:hover:not(:disabled) {
-  background: #7c3aed;
+  background: #b2a8ff;
 }
 
 .spinner {
