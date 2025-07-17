@@ -17,11 +17,8 @@
       </div>
     </header>
     <div :class="$style.layout">
-
       <main :class="$style.main">
-        <div class="container">
-          <slot />
-        </div>
+        <slot />
       </main>
     </div>
   </div>

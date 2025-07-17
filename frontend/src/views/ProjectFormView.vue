@@ -1,161 +1,158 @@
 <template>
   <AppLayout>
-    <div :class="$style.formPage">
+    <div class="container">
       <div :class="$style.header">
-        <h1 :class="$style.title">{{ isEditing ? 'Editar Projeto' : 'Novo Projeto' }}</h1>
         <router-link to="/" :class="$style.backBtn">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" stroke-width="2"/>
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" stroke-width="2" />
           </svg>
-          Voltar para projetos
+          Voltar
         </router-link>
+        <h1 :class="$style.title">{{ isEditing ? 'Editar Projeto' : 'Novo Projeto' }}</h1>
       </div>
+      <div :class="$style.backForm">
+        <div :class="$style.formPage">
+          <div :class="$style.formContainer">
+            <form @submit.prevent="onSubmit" :class="$style.form">
+              <!-- Nome do Projeto -->
+              <div :class="$style.formGroup">
+                <label for="name" :class="$style.label">
+                  Nome do projeto <span :class="$style.required">(Obrigatório)</span>
+                </label>
+                <input
+                  id="name"
+                  v-model="form.name"
+                  type="text"
+                  placeholder="Digite o nome do projeto"
+                  :class="[$style.input, { [$style.error]: errors.name }]"
+                  :disabled="loading"
+                />
+                <p v-if="errors.name" :class="$style.errorMessage">{{ errors.name }}</p>
+              </div>
 
-      <div :class="$style.formContainer">
-        <form @submit.prevent="onSubmit" :class="$style.form">
-          <!-- Nome do Projeto -->
-          <div :class="$style.formGroup">
-            <label for="name" :class="$style.label">
-              Nome do projeto <span :class="$style.required">*</span>
-            </label>
-            <input
-              id="name"
-              v-model="form.name"
-              type="text"
-              placeholder="Digite o nome do projeto"
-              :class="[$style.input, { [$style.error]: errors.name }]"
-              :disabled="loading"
-            />
-            <p v-if="errors.name" :class="$style.errorMessage">{{ errors.name }}</p>
-          </div>
+              <!-- Cliente -->
+              <div :class="$style.formGroup">
+                <label for="client" :class="$style.label">
+                  Cliente <span :class="$style.required">(Obrigatório)</span>
+                </label>
+                <input
+                  id="client"
+                  v-model="form.client"
+                  type="text"
+                  placeholder="Digite o nome do cliente"
+                  :class="[$style.input, { [$style.error]: errors.client }]"
+                  :disabled="loading"
+                />
+                <p v-if="errors.client" :class="$style.errorMessage">{{ errors.client }}</p>
+              </div>
 
-          <!-- Cliente -->
-          <div :class="$style.formGroup">
-            <label for="client" :class="$style.label">
-              Cliente <span :class="$style.required">*</span>
-            </label>
-            <input
-              id="client"
-              v-model="form.client"
-              type="text"
-              placeholder="Digite o nome do cliente"
-              :class="[$style.input, { [$style.error]: errors.client }]"
-              :disabled="loading"
-            />
-            <p v-if="errors.client" :class="$style.errorMessage">{{ errors.client }}</p>
-          </div>
-
-          <!-- Datas -->
-          <div :class="$style.dateRow">
-            <div :class="$style.formGroup">
-              <label for="startDate" :class="$style.label">
-                Data de início <span :class="$style.required">*</span>
-              </label>
-              <input
-                id="startDate"
-                v-model="form.startDate"
-                type="date"
-                :class="[$style.input, { [$style.error]: errors.startDate }]"
-                :disabled="loading"
-              />
-              <p v-if="errors.startDate" :class="$style.errorMessage">{{ errors.startDate }}</p>
-            </div>
-
-            <div :class="$style.formGroup">
-              <label for="endDate" :class="$style.label">
-                Data final <span :class="$style.required">*</span>
-              </label>
-              <input
-                id="endDate"
-                v-model="form.endDate"
-                type="date"
-                :class="[$style.input, { [$style.error]: errors.endDate }]"
-                :disabled="loading"
-              />
-              <p v-if="errors.endDate" :class="$style.errorMessage">{{ errors.endDate }}</p>
-            </div>
-          </div>
-
-          <!-- Capa do Projeto -->
-          <div :class="$style.formGroup">
-            <label for="cover" :class="$style.label">Capa do projeto</label>
-            <div :class="$style.fileInputContainer">
-              <input
-                id="cover"
-                ref="fileInput"
-                type="file"
-                accept="image/*"
-                :class="$style.fileInput"
-                @change="onFileChange"
-                :disabled="loading"
-              />
-              <div :class="$style.fileInputDisplay" @click="triggerFileInput">
-                <div v-if="coverPreview" :class="$style.imagePreview">
-                  <img :src="coverPreview" alt="Preview da capa" :class="$style.previewImage" />
-                  <button
-                    type="button"
-                    @click.stop="removeCover"
-                    :class="$style.removeImageBtn"
-                    title="Remover imagem"
-                  >
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2"/>
-                    </svg>
-                  </button>
+              <!-- Datas -->
+              <div :class="$style.dateRow">
+                <div :class="$style.formGroup">
+                  <label for="startDate" :class="$style.label">
+                    Data de início <span :class="$style.required">(Obrigatório)</span>
+                  </label>
+                  <input
+                    id="startDate"
+                    v-model="form.startDate"
+                    type="date"
+                    :class="[$style.input, { [$style.error]: errors.startDate }]"
+                    :disabled="loading"
+                  />
+                  <p v-if="errors.startDate" :class="$style.errorMessage">{{ errors.startDate }}</p>
                 </div>
-                <div v-else :class="$style.uploadPlaceholder">
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15M17 8L12 3M12 3L7 8M12 3V15" stroke="currentColor" stroke-width="2"/>
-                  </svg>
-                  <p>Escolha uma imagem ou arraste aqui</p>
-                  <p :class="$style.fileHint">PNG, JPG até 5MB</p>
+
+                <div :class="$style.formGroup">
+                  <label for="endDate" :class="$style.label">
+                    Data final <span :class="$style.required">(Obrigatório)</span>
+                  </label>
+                  <input
+                    id="endDate"
+                    v-model="form.endDate"
+                    type="date"
+                    :class="[$style.input, { [$style.error]: errors.endDate }]"
+                    :disabled="loading"
+                  />
+                  <p v-if="errors.endDate" :class="$style.errorMessage">{{ errors.endDate }}</p>
                 </div>
               </div>
-            </div>
-            <p v-if="errors.coverImage" :class="$style.errorMessage">{{ errors.coverImage }}</p>
-          </div>
 
-          <!-- Favoritar (apenas para edição) -->
-          <div v-if="isEditing" :class="$style.formGroup">
-            <label :class="$style.checkboxLabel">
-              <input
-                v-model="form.isFavorite"
-                type="checkbox"
-                :class="$style.checkbox"
-                :disabled="loading"
-              />
-              <span :class="$style.checkboxText">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 21.35L10.55 20.03C5.4 15.36 2 12.28 2 8.5C2 5.42 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.09C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.42 22 8.5C22 12.28 18.6 15.36 13.45 20.04L12 21.35Z"
-                  :fill="form.isFavorite ? 'currentColor' : 'none'"
-                  stroke="currentColor"
-                  stroke-width="2"/>
-                </svg>
-                Marcar como favorito
-              </span>
-            </label>
-          </div>
+              <!-- Capa do Projeto -->
+              <div :class="$style.formGroup">
+                <label for="cover" :class="$style.label">Capa do projeto</label>
+                <div :class="$style.fileInputContainer">
+                  <input
+                    id="cover"
+                    ref="fileInput"
+                    type="file"
+                    accept="image/*"
+                    :class="$style.fileInput"
+                    @change="onFileChange"
+                    :disabled="loading"
+                  />
+                  <div :class="$style.fileInputDisplay" @click="triggerFileInput">
+                    <div v-if="coverPreview" :class="$style.imagePreview">
+                      <img :src="coverPreview" alt="Preview da capa" :class="$style.previewImage" />
+                      <button
+                        type="button"
+                        @click.stop="removeCover"
+                        :class="$style.removeImageBtn"
+                        title="Remover imagem"
+                      >
+                        <svg
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" />
+                        </svg>
+                      </button>
+                    </div>
+                    <div v-else :class="$style.uploadPlaceholder">
+                      <svg
+                        width="32"
+                        height="32"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15M17 8L12 3M12 3L7 8M12 3V15"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        />
+                      </svg>
+                      <p>Escolha uma imagem ou arraste aqui</p>
+                      <p :class="$style.fileHint">PNG, JPG até 5MB</p>
+                    </div>
+                  </div>
+                </div>
+                <p v-if="errors.coverImage" :class="$style.errorMessage">{{ errors.coverImage }}</p>
+              </div>
 
-          <!-- Botões -->
-          <div :class="$style.formActions">
-            <router-link to="/" :class="[$style.btn, $style.btnSecondary]">
-              Cancelar
-            </router-link>
-            <button
-              type="submit"
-              :class="[$style.btn, $style.btnPrimary]"
-              :disabled="loading"
-            >
-              <span v-if="loading" :class="$style.spinner"></span>
-              {{ isEditing ? 'Salvar alterações' : 'Criar projeto' }}
-            </button>
-          </div>
+              <!-- Botões -->
+              <div :class="$style.formActions">
+                <button type="submit" :class="[$style.btn, $style.btnPrimary]" :disabled="loading">
+                  <span v-if="loading" :class="$style.spinner"></span>
+                  {{ isEditing ? 'Salvar projeto' : 'Criar projeto' }}
+                </button>
+              </div>
 
-          <!-- Error Message -->
-          <div v-if="submitError" :class="$style.submitError">
-            {{ submitError }}
+              <!-- Error Message -->
+              <div v-if="submitError" :class="$style.submitError">
+                {{ submitError }}
+              </div>
+            </form>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   </AppLayout>
@@ -183,7 +180,7 @@ const form = ref({
   startDate: '',
   endDate: '',
   coverImage: null as File | null,
-  isFavorite: false
+  isFavorite: false,
 })
 
 const errors = ref({
@@ -191,7 +188,7 @@ const errors = ref({
   client: '',
   startDate: '',
   endDate: '',
-  coverImage: ''
+  coverImage: '',
 })
 
 const fileInput = ref<HTMLInputElement>()
@@ -203,28 +200,42 @@ const validateForm = (): boolean => {
     client: '',
     startDate: '',
     endDate: '',
-    coverImage: ''
+    coverImage: '',
   }
 
   let isValid = true
 
+  // Validação do nome do projeto - pelo menos duas palavras
   if (!form.value.name.trim()) {
-    errors.value.name = 'Nome do projeto é obrigatório'
+    errors.value.name = 'Por favor, digite ao menos duas palavras'
     isValid = false
+  } else {
+    const words = form.value.name.trim().split(/\s+/)
+    if (words.length < 2) {
+      errors.value.name = 'Por favor, digite ao menos duas palavras'
+      isValid = false
+    }
   }
 
+  // Validação do cliente - pelo menos uma palavra
   if (!form.value.client.trim()) {
-    errors.value.client = 'Cliente é obrigatório'
+    errors.value.client = 'Por favor, digite ao menos uma palavra'
     isValid = false
+  } else {
+    const words = form.value.client.trim().split(/\s+/)
+    if (words.length < 1 || words[0] === '') {
+      errors.value.client = 'Por favor, digite ao menos uma palavra'
+      isValid = false
+    }
   }
 
   if (!form.value.startDate) {
-    errors.value.startDate = 'Data de início é obrigatória'
+    errors.value.startDate = 'Selecione uma data válida'
     isValid = false
   }
 
   if (!form.value.endDate) {
-    errors.value.endDate = 'Data final é obrigatória'
+    errors.value.endDate = 'Selecione uma data válida'
     isValid = false
   }
 
@@ -292,7 +303,7 @@ const loadProject = async () => {
       startDate: formatDateInput(project.startDate),
       endDate: formatDateInput(project.endDate),
       coverImage: null,
-      isFavorite: project.isFavorite
+      isFavorite: project.isFavorite,
     }
 
     if (project.coverImage) {
@@ -320,7 +331,7 @@ const onSubmit = async () => {
         startDate: form.value.startDate,
         endDate: form.value.endDate,
         isFavorite: form.value.isFavorite,
-        coverImage: form.value.coverImage
+        coverImage: form.value.coverImage,
       }
 
       await ProjectService.updateProject(route.params.id as string, updateData)
@@ -330,7 +341,7 @@ const onSubmit = async () => {
         client: form.value.client,
         startDate: form.value.startDate,
         endDate: form.value.endDate,
-        coverImage: form.value.coverImage
+        coverImage: form.value.coverImage,
       }
 
       await ProjectService.createProject(createData)
@@ -353,23 +364,29 @@ onMounted(() => {
 </script>
 
 <style module>
+.backForm {
+  border-radius: 12px;
+  border: 1px solid #dcdcdc;
+  padding: 2rem;
+}
+
 .formPage {
-  max-width: 600px;
+  max-width: 700px;
   margin: 0 auto;
 }
 
 .header {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 2rem;
-  gap: 1rem;
 }
 
 .title {
   font-size: 1.75rem;
   font-weight: 700;
-  color: #1e293b;
+  color: #1f1283;
   margin: 0;
 }
 
@@ -377,9 +394,9 @@ onMounted(() => {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #64748b;
+  color: #1f1283;
   text-decoration: none;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1rem 0.5rem 0;
   border-radius: 8px;
   transition: all 0.2s ease;
   font-weight: 500;
@@ -388,13 +405,6 @@ onMounted(() => {
 .backBtn:hover {
   color: #475569;
   background-color: #f8fafc;
-}
-
-.formContainer {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  padding: 2rem;
 }
 
 .form {
@@ -410,18 +420,23 @@ onMounted(() => {
 
 .label {
   font-weight: 500;
-  color: #374151;
+  color: #695CCD;
   margin-bottom: 0.5rem;
-  font-size: 0.875rem;
+  font-size: 1.125rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .required {
-  color: #ef4444;
+  color: #717171;
+  font-size: .85rem;
 }
 
 .input {
   padding: 0.75rem;
-  border: 1px solid #d1d5db;
+  border: 1px solid #717171;
+  background-color: #fff;
   border-radius: 8px;
   font-size: 1rem;
   transition: all 0.2s ease;
@@ -429,7 +444,7 @@ onMounted(() => {
 
 .input:focus {
   outline: none;
-  border-color: #695CCD;
+  border-color: #695ccd;
   box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
 }
 
@@ -475,7 +490,7 @@ onMounted(() => {
 }
 
 .fileInputDisplay:hover {
-  border-color: #695CCD;
+  border-color: #695ccd;
   background-color: #faf7ff;
 }
 
@@ -538,7 +553,7 @@ onMounted(() => {
 }
 
 .checkboxLabel:hover {
-  border-color: #695CCD;
+  border-color: #695ccd;
 }
 
 .checkbox {
@@ -554,7 +569,7 @@ onMounted(() => {
 }
 
 .checkbox:checked + .checkboxText {
-  color: #695CCD;
+  color: #695ccd;
 }
 
 .formActions {
@@ -596,7 +611,7 @@ onMounted(() => {
 }
 
 .btnPrimary {
-  background: #695CCD;
+  background: #695ccd;
   color: white;
 }
 

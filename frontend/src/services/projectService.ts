@@ -22,7 +22,17 @@ export class ProjectService {
     if (filters.limit) params.append('limit', filters.limit.toString())
 
     const response = await api.get(`/projects?${params.toString()}`)
-    return response.data
+
+    // Transformar a resposta do backend para o formato esperado pelo frontend
+    const backendResponse = response.data
+    return {
+      data: backendResponse.data,
+      total: backendResponse.pagination.total,
+      page: backendResponse.pagination.page,
+      totalPages: backendResponse.pagination.totalPages,
+      hasNextPage: backendResponse.pagination.hasNext,
+      hasPrevPage: backendResponse.pagination.hasPrev
+    }
   }
 
   static async getProjectById(id: string): Promise<Project> {
