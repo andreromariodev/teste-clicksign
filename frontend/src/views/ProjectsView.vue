@@ -136,13 +136,11 @@ const {
   prevPage
 } = useProjects()
 
-// Local reactive state for UI
 const searchTerm = ref('')
 const onlyFavorites = ref(false)
 const sortBy = ref<'name' | 'startDate' | 'endDate'>('name')
 const sortOrder = ref<'asc' | 'desc'>('asc')
 
-// Delete modal state
 const deleteModal = ref({
   show: false,
   loading: false,
@@ -150,7 +148,6 @@ const deleteModal = ref({
   projectName: ''
 })
 
-// Methods
 const onSearch = (term: string) => {
   setSearch(term)
 }
@@ -183,7 +180,6 @@ const confirmDelete = async () => {
   }
 }
 
-// Watchers for filter changes
 watch(onlyFavorites, (value) => {
   setOnlyFavorites(value)
 })
@@ -192,7 +188,6 @@ watch([sortBy, sortOrder], ([newSortBy, newSortOrder]) => {
   setSorting(newSortBy, newSortOrder)
 })
 
-// Load data on mount
 onMounted(async () => {
   await Promise.all([
     loadProjects(),
@@ -206,8 +201,8 @@ onMounted(async () => {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 2rem;
-  gap: 2rem;
+  margin-bottom: var(--spacing-2xl);
+  gap: var(--spacing-2xl);
 }
 
 .titleSection {
@@ -215,16 +210,16 @@ onMounted(async () => {
 }
 
 .title {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #1e293b;
-  margin: 0 0 0.5rem;
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--spacing-sm);
 }
 
 .subtitle {
-  color: #64748b;
+  color: var(--color-text-light);
   margin: 0;
-  font-size: 1rem;
+  font-size: var(--font-size-base);
 }
 
 .searchSection {
@@ -238,18 +233,18 @@ onMounted(async () => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 4rem 2rem;
+  padding: var(--spacing-4xl) var(--spacing-2xl);
   text-align: center;
 }
 
 .spinner {
   width: 40px;
   height: 40px;
-  border: 3px solid #f1f5f9;
-  border-top: 3px solid #695CCD;
-  border-radius: 50%;
+  border: 3px solid var(--color-background-muted);
+  border-top: 3px solid var(--color-primary);
+  border-radius: var(--radius-round);
   animation: spin 1s linear infinite;
-  margin-bottom: 1rem;
+  margin-bottom: var(--spacing-lg);
 }
 
 @keyframes spin {
@@ -259,37 +254,37 @@ onMounted(async () => {
 }
 
 .error {
-  background: #fef2f2;
-  border: 1px solid #fecaca;
-  color: #dc2626;
-  padding: 1rem;
-  border-radius: 8px;
-  margin: 2rem 0;
+  background: var(--color-error-bg);
+  border: 1px solid var(--color-border-primary);
+  color: var(--color-error-text);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-md);
+  margin: var(--spacing-2xl) 0;
   text-align: center;
 }
 
 .emptyState {
   text-align: center;
-  padding: 4rem 2rem;
+  padding: var(--spacing-4xl) var(--spacing-2xl);
 }
 
 .emptyIcon {
-  color: #9ca3af;
-  margin-bottom: 1.5rem;
+  color: var(--color-text-light);
+  margin-bottom: var(--spacing-xl);
   display: flex;
   justify-content: center;
 }
 
 .emptyTitle {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #374151;
-  margin: 0 0 0.75rem;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--spacing-md);
 }
 
 .emptyDescription {
-  color: #6b7280;
-  margin: 0 0 2rem;
+  color: var(--color-text-light);
+  margin: 0 0 var(--spacing-2xl);
   max-width: 400px;
   margin-left: auto;
   margin-right: auto;
@@ -298,26 +293,26 @@ onMounted(async () => {
 .createBtn {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  background: #695CCD;
-  color: white;
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
+  gap: var(--spacing-sm);
+  background: var(--color-primary);
+  color: var(--color-text-white);
+  padding: var(--button-padding-md);
+  border-radius: var(--button-radius);
   text-decoration: none;
-  font-weight: 500;
-  transition: all 0.2s ease;
+  font-weight: var(--font-weight-medium);
+  transition: var(--transition-all);
 }
 
 .createBtn:hover {
-  background: #7c3aed;
+  background: var(--color-primary-dark);
   transform: translateY(-1px);
 }
 
 .projectsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 1.5rem;
-  margin: 2rem 0;
+  grid-template-columns: var(--grid-columns);
+  gap: var(--grid-gap);
+  margin: var(--spacing-2xl) 0;
 }
 
 @media (max-width: 768px) {
@@ -332,7 +327,7 @@ onMounted(async () => {
 
   .projectsGrid {
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: var(--spacing-lg);
   }
 }
 </style>

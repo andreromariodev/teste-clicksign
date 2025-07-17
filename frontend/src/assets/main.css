@@ -1,16 +1,17 @@
+@import './variables.css';
 @import './base.css';
 
 #app {
   margin: 0 auto;
-  font-weight: normal;
+  font-weight: var(--font-weight-normal);
 }
 
 a,
 .green {
   text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
+  color: var(--color-primary);
+  transition: var(--transition-slow);
+  padding: var(--spacing-xs);
 }
 
 @media (min-width: 1024px) {
@@ -21,10 +22,10 @@ a,
 }
 
 ::selection {
-  background: #FFB23D;
-  color: #FFF;
+  background: var(--color-selection-bg);
+  color: var(--color-selection-text);
 }
 
 strong {
-  font-weight: bold;
+  font-weight: var(--font-weight-bold);
 }

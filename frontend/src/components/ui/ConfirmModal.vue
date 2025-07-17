@@ -102,7 +102,6 @@ onUnmounted(() => {
   document.body.style.overflow = ''
 })
 
-// Watch for show prop changes to handle body scroll
 import { watch } from 'vue'
 watch(() => props.show, (newShow) => {
   document.body.style.overflow = newShow ? 'hidden' : ''
@@ -116,12 +115,12 @@ watch(() => props.show, (newShow) => {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--color-background-overlay);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
-  padding: 1rem;
+  z-index: var(--z-index-modal);
+  padding: var(--spacing-lg);
   animation: fadeIn 0.2s ease-out;
 }
 
@@ -135,9 +134,9 @@ watch(() => props.show, (newShow) => {
 }
 
 .modal {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  background: var(--color-background-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
   max-width: 400px;
   width: 100%;
   animation: slideIn 0.2s ease-out;
@@ -158,38 +157,38 @@ watch(() => props.show, (newShow) => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 1.5rem 0;
+  padding: var(--spacing-xl) var(--spacing-xl) 0;
 }
 
 .title {
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: #1f2937;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
   margin: 0;
 }
 
 .closeBtn {
   background: none;
   border: none;
-  color: #9ca3af;
+  color: var(--color-text-light);
   cursor: pointer;
-  padding: 0.25rem;
-  border-radius: 4px;
-  transition: color 0.2s ease;
+  padding: var(--spacing-xs);
+  border-radius: var(--radius-sm);
+  transition: var(--transition-normal);
 }
 
 .closeBtn:hover {
-  color: #6b7280;
+  color: var(--color-text-secondary);
 }
 
 .body {
-  padding: 1.5rem;
+  padding: var(--spacing-xl);
   text-align: center;
 }
 
 .icon {
-  color: #f59e0b;
-  margin-bottom: 1rem;
+  color: var(--color-warning);
+  margin-bottom: var(--spacing-lg);
   display: flex;
   justify-content: center;
 }
@@ -199,36 +198,36 @@ watch(() => props.show, (newShow) => {
 }
 
 .message {
-  font-size: 1rem;
-  font-weight: 500;
-  color: #1f2937;
-  margin: 0 0 0.5rem;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--spacing-sm);
 }
 
 .description {
-  font-size: 0.875rem;
-  color: #6b7280;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
   margin: 0;
-  line-height: 1.5;
+  line-height: var(--line-height-normal);
 }
 
 .footer {
   display: flex;
-  gap: 0.75rem;
+  gap: var(--spacing-md);
   justify-content: flex-end;
-  padding: 0 1.5rem 1.5rem;
+  padding: 0 var(--spacing-xl) var(--spacing-xl);
 }
 
 .btn {
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  font-weight: 500;
+  padding: var(--button-padding-md);
+  border-radius: var(--button-radius);
+  font-weight: var(--font-weight-medium);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: var(--transition-all);
   border: none;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--spacing-sm);
   min-width: 80px;
   justify-content: center;
 }
@@ -239,21 +238,21 @@ watch(() => props.show, (newShow) => {
 }
 
 .btnSecondary {
-  background: #f3f4f6;
-  color: #374151;
+  background: var(--color-background-muted);
+  color: var(--color-text-secondary);
 }
 
 .btnSecondary:hover:not(:disabled) {
-  background: #e5e7eb;
+  background: var(--color-background-secondary);
 }
 
 .btnDanger {
-  background: #ef4444;
-  color: white;
+  background: var(--color-error);
+  color: var(--color-text-white);
 }
 
 .btnDanger:hover:not(:disabled) {
-  background: #dc2626;
+  background: var(--color-error-text);
 }
 
 .spinner {
@@ -261,7 +260,7 @@ watch(() => props.show, (newShow) => {
   height: 16px;
   border: 2px solid transparent;
   border-top: 2px solid currentColor;
-  border-radius: 50%;
+  border-radius: var(--radius-round);
   animation: spin 1s linear infinite;
 }
 

@@ -69,7 +69,22 @@ export function useProjects() {
       const updatedProject = await ProjectService.toggleFavorite(id)
       const index = projects.value.findIndex(p => p.id === id)
       if (index !== -1) {
-        projects.value[index] = updatedProject
+        if (filters.value.onlyFavorites && !updatedProject.isFavorite) {
+          projects.value.splice(index, 1)
+          paginationInfo.value.total = Math.max(0, paginationInfo.value.total - 1)
+          const newTotalPages = Math.ceil(paginationInfo.value.total / (filters.value.limit || 12))
+          paginationInfo.value.totalPages = newTotalPages
+
+          if (projects.value.length === 0 && paginationInfo.value.page > 1) {
+            setPage(paginationInfo.value.page - 1)
+            return
+          }
+
+          paginationInfo.value.hasNextPage = paginationInfo.value.page < newTotalPages
+          paginationInfo.value.hasPrevPage = paginationInfo.value.page > 1
+        } else {
+          projects.value[index] = updatedProject
+        }
       }
     } catch (err) {
       error.value = 'Erro ao atualizar favorito'
@@ -81,7 +96,6 @@ export function useProjects() {
     try {
       await ProjectService.deleteProject(id)
       projects.value = projects.value.filter(p => p.id !== id)
-      // Recarregar para ajustar paginação
       await loadProjects()
     } catch (err) {
       error.value = 'Erro ao excluir projeto'
@@ -91,7 +105,7 @@ export function useProjects() {
 
   const setSearch = (searchTerm: string) => {
     filters.value.search = searchTerm
-    filters.value.page = 1 // Reset to first page when searching
+    filters.value.page = 1
   }
 
   const setOnlyFavorites = (onlyFavorites: boolean) => {
@@ -121,13 +135,11 @@ export function useProjects() {
     }
   }
 
-  // Computed properties
   const hasProjects = computed(() => projects.value.length > 0)
   const totalProjects = computed(() => paginationInfo.value.total)
   const currentPage = computed(() => filters.value.page || 1)
   const totalPages = computed(() => paginationInfo.value.totalPages)
 
-  // Watch for filter changes and reload projects
   watch(
     filters,
     () => {
@@ -137,7 +149,6 @@ export function useProjects() {
   )
 
   return {
-    // State
     projects,
     loading,
     error,
@@ -145,13 +156,11 @@ export function useProjects() {
     filters,
     searchHistory,
 
-    // Computed
     hasProjects,
     totalProjects,
     currentPage,
     totalPages,
 
-    // Methods
     loadProjects,
     loadSearchHistory,
     clearSearchHistory,

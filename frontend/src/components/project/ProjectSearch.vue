@@ -89,7 +89,6 @@ watch(() => props.modelValue, (newValue) => {
 const onSearch = () => {
   emit('update:modelValue', searchTerm.value)
 
-  // Debounce search
   if (searchTimeout) {
     clearTimeout(searchTimeout)
   }
@@ -124,7 +123,6 @@ const onClearHistory = () => {
   showHistory.value = false
 }
 
-// Close history when clicking outside
 const handleClickOutside = (event: Event) => {
   const target = event.target as HTMLElement
   if (!target.closest('[data-search-container]')) {
@@ -150,7 +148,7 @@ watch(showHistory, (show) => {
 
 .searchInputContainer {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--spacing-sm);
   align-items: center;
 }
 
@@ -163,53 +161,53 @@ watch(showHistory, (show) => {
 
 .searchInput svg:first-child {
   position: absolute;
-  left: 12px;
-  color: #94a3b8;
+  left: var(--spacing-md);
+  color: var(--color-text-light);
   z-index: 1;
 }
 
 .input {
   width: 100%;
-  padding: 12px 44px 12px 44px;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  font-size: 0.875rem;
-  transition: all 0.2s ease;
+  padding: var(--spacing-md) 44px;
+  border: var(--input-border);
+  border-radius: var(--input-radius);
+  font-size: var(--font-size-sm);
+  transition: var(--transition-all);
 }
 
 .input:focus {
   outline: none;
-  border-color: #695CCD;
-  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+  border: var(--input-border-focus);
+  box-shadow: var(--shadow-focus);
 }
 
 .clearBtn {
   position: absolute;
-  right: 8px;
+  right: var(--spacing-sm);
   background: none;
   border: none;
-  color: #94a3b8;
+  color: var(--color-text-light);
   cursor: pointer;
-  padding: 4px;
-  border-radius: 4px;
+  padding: var(--spacing-xs);
+  border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: color 0.2s ease;
+  transition: var(--transition-normal);
 }
 
 .clearBtn:hover {
-  color: #64748b;
+  color: var(--color-text-secondary);
 }
 
 .historyBtn {
-  background: #f8fafc;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  padding: 12px;
+  background: var(--color-background-secondary);
+  border: 1px solid var(--color-border-secondary);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
   cursor: pointer;
-  color: #64748b;
-  transition: all 0.2s ease;
+  color: var(--color-text-light);
+  transition: var(--transition-all);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -217,9 +215,9 @@ watch(showHistory, (show) => {
 
 .historyBtn:hover,
 .historyBtn.active {
-  background: #695CCD;
-  border-color: #695CCD;
-  color: white;
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-text-white);
 }
 
 .historyDropdown {
@@ -227,39 +225,39 @@ watch(showHistory, (show) => {
   top: 100%;
   left: 0;
   right: 0;
-  background: white;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background: var(--color-background-primary);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
   z-index: 100;
-  margin-top: 4px;
+  margin-top: var(--spacing-xs);
 }
 
 .historyHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid #f1f5f9;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #374151;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--color-background-muted);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
 }
 
 .clearHistoryBtn {
   background: none;
   border: none;
-  color: #64748b;
+  color: var(--color-text-light);
   cursor: pointer;
-  font-size: 0.75rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  transition: all 0.2s ease;
+  font-size: var(--font-size-xs);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  transition: var(--transition-all);
 }
 
 .clearHistoryBtn:hover {
-  background: #f8fafc;
-  color: #374151;
+  background: var(--color-background-secondary);
+  color: var(--color-text-secondary);
 }
 
 .historyList {
@@ -271,22 +269,22 @@ watch(showHistory, (show) => {
 .historyItem {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1rem;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-lg);
   cursor: pointer;
-  font-size: 0.875rem;
-  color: #64748b;
-  transition: all 0.2s ease;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+  transition: var(--transition-all);
 }
 
 .historyItem:hover {
-  background: #f8fafc;
-  color: #374151;
+  background: var(--color-background-secondary);
+  color: var(--color-text-secondary);
 }
 
 .historyItem:last-child {
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
 }
 
 .historyItem svg {

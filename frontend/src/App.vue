@@ -18,19 +18,19 @@ import { RouterView } from 'vue-router'
 }
 
 body {
-  font-family: 'Encode Sans Semi Expanded', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  background-color: #f8fafc;
-  color: #334155;
-  line-height: 1.6;
+  font-family: var(--font-family-primary);
+  background-color: var(--color-background-secondary);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
 }
 
 button {
   border: none;
-  border-radius: 8px;
-  padding: 12px 24px;
-  font-weight: 500;
+  border-radius: var(--button-radius);
+  padding: var(--button-padding-md);
+  font-weight: var(--font-weight-medium);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: var(--transition-all);
   font-family: inherit;
 }
 
@@ -40,101 +40,101 @@ button:disabled {
 }
 
 .btn-primary {
-  background-color: #695CCD;
-  color: white;
+  background-color: var(--color-primary);
+  color: var(--color-text-white);
 }
 
 .btn-primary:hover:not(:disabled) {
-  background-color: #7c3aed;
+  background-color: var(--color-primary-dark);
 }
 
 .btn-secondary {
-  background-color: #e2e8f0;
-  color: #475569;
+  background-color: var(--color-background-muted);
+  color: var(--color-text-secondary);
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background-color: #cbd5e1;
+  background-color: var(--color-background-secondary);
 }
 
 .btn-danger {
-  background-color: #ef4444;
-  color: white;
+  background-color: var(--color-error);
+  color: var(--color-text-white);
 }
 
 .btn-danger:hover:not(:disabled) {
-  background-color: #dc2626;
+  background-color: var(--color-error-text);
 }
 
 .btn-small {
-  padding: 8px 16px;
-  font-size: 0.875rem;
+  padding: var(--button-padding-sm);
+  font-size: var(--font-size-sm);
 }
 
 input, textarea, select {
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  padding: 12px;
+  border: var(--input-border);
+  border-radius: var(--input-radius);
+  padding: var(--input-padding);
   font-family: inherit;
-  font-size: 1rem;
-  transition: border-color 0.2s ease;
+  font-size: var(--font-size-base);
+  transition: var(--transition-normal);
 }
 
 input:focus, textarea:focus, select:focus {
   outline: none;
-  border-color: #695CCD;
-  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+  border: var(--input-border-focus);
+  box-shadow: var(--shadow-focus);
 }
 
 .form-group {
-  margin-bottom: 1rem;
+  margin-bottom: var(--spacing-lg);
 }
 
 .form-label {
   display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-  color: #374151;
+  margin-bottom: var(--spacing-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
 }
 
 .form-error {
-  color: #ef4444;
-  font-size: 0.875rem;
-  margin-top: 0.25rem;
+  color: var(--color-error);
+  font-size: var(--font-size-sm);
+  margin-top: var(--spacing-xs);
 }
 
 .card {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  background: var(--color-background-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
   overflow: hidden;
 }
 
 .container {
   max-width: 1860px;
-  padding: 0 2rem;
+  padding: 0 var(--spacing-2xl);
   margin: 0 auto;
 }
 
 mark {
-  background-color: #fef3c7;
-  color: #92400e;
-  padding: 0 2px;
-  border-radius: 2px;
+  background-color: var(--color-warning-bg);
+  color: var(--color-warning-text);
+  padding: 0 var(--spacing-xs);
+  border-radius: var(--radius-xs);
 }
 
 .loading {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 2rem;
+  padding: var(--spacing-2xl);
 }
 
 .error {
-  background-color: #fef2f2;
-  color: #dc2626;
-  padding: 1rem;
-  border-radius: 8px;
-  margin: 1rem 0;
+  background-color: var(--color-error-bg);
+  color: var(--color-error-text);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-md);
+  margin: var(--spacing-lg) 0;
 }
 </style>

@@ -177,7 +177,6 @@ const isEditing = computed(() => !!route.params.id)
 const loading = ref(false)
 const submitError = ref('')
 
-// Form data
 const form = ref({
   name: '',
   client: '',
@@ -187,7 +186,6 @@ const form = ref({
   isFavorite: false
 })
 
-// Validation errors
 const errors = ref({
   name: '',
   client: '',
@@ -196,7 +194,6 @@ const errors = ref({
   coverImage: ''
 })
 
-// File handling
 const fileInput = ref<HTMLInputElement>()
 const coverPreview = ref('')
 
@@ -249,13 +246,11 @@ const onFileChange = (event: Event) => {
   const file = target.files?.[0]
 
   if (file) {
-    // Validate file type
     if (!file.type.startsWith('image/')) {
       errors.value.coverImage = 'Apenas arquivos de imagem são permitidos'
       return
     }
 
-    // Validate file size (5MB)
     if (file.size > 5 * 1024 * 1024) {
       errors.value.coverImage = 'Arquivo muito grande. Máximo 5MB'
       return
@@ -264,7 +259,6 @@ const onFileChange = (event: Event) => {
     form.value.coverImage = file
     errors.value.coverImage = ''
 
-    // Create preview
     const reader = new FileReader()
     reader.onload = (e) => {
       coverPreview.value = e.target?.result as string
@@ -301,7 +295,6 @@ const loadProject = async () => {
       isFavorite: project.isFavorite
     }
 
-    // Set existing cover preview
     if (project.coverImage) {
       coverPreview.value = `http://localhost:3001${project.coverImage}`
     }
@@ -321,7 +314,6 @@ const onSubmit = async () => {
 
   try {
     if (isEditing.value) {
-      // Update project
       const updateData: UpdateProjectDto = {
         name: form.value.name,
         client: form.value.client,
@@ -333,7 +325,6 @@ const onSubmit = async () => {
 
       await ProjectService.updateProject(route.params.id as string, updateData)
     } else {
-      // Create project
       const createData: CreateProjectDto = {
         name: form.value.name,
         client: form.value.client,
@@ -345,7 +336,6 @@ const onSubmit = async () => {
       await ProjectService.createProject(createData)
     }
 
-    // Redirect to projects list
     router.push('/')
   } catch (err: any) {
     submitError.value = err.response?.data?.error || 'Erro ao salvar projeto'

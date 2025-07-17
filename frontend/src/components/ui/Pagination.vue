@@ -63,16 +63,13 @@ const visiblePages = computed(() => {
   const pages: number[] = []
   const { currentPage, totalPages } = props
 
-  // Always show first page
   if (totalPages > 0) {
     pages.push(1)
   }
 
-  // Calculate range around current page
   let start = Math.max(2, currentPage - 1)
   let end = Math.min(totalPages - 1, currentPage + 1)
 
-  // Adjust range if we're near the beginning or end
   if (currentPage <= 3) {
     end = Math.min(totalPages - 1, 4)
   }
@@ -81,24 +78,20 @@ const visiblePages = computed(() => {
     start = Math.max(2, totalPages - 3)
   }
 
-  // Add ellipsis if needed
   if (start > 2) {
-    pages.push(-1) // represents ellipsis
+    pages.push(-1)
   }
 
-  // Add middle pages
   for (let i = start; i <= end; i++) {
     if (i !== 1 && i !== totalPages) {
       pages.push(i)
     }
   }
 
-  // Add ellipsis if needed
   if (end < totalPages - 1) {
-    pages.push(-1) // represents ellipsis
+    pages.push(-1)
   }
 
-  // Always show last page
   if (totalPages > 1) {
     pages.push(totalPages)
   }
@@ -112,14 +105,14 @@ const visiblePages = computed(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  padding: 2rem 0;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-2xl) 0;
   flex-wrap: wrap;
 }
 
 .pageNumbers {
   display: flex;
-  gap: 0.25rem;
+  gap: var(--spacing-xs);
 }
 
 .pageBtn {
@@ -128,18 +121,18 @@ const visiblePages = computed(() => {
   justify-content: center;
   min-width: 40px;
   height: 40px;
-  border: 1px solid #d1d5db;
-  background: white;
-  border-radius: 8px;
+  border: 1px solid var(--color-border-secondary);
+  background: var(--color-background-primary);
+  border-radius: var(--radius-md);
   cursor: pointer;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  color: #374151;
+  font-weight: var(--font-weight-medium);
+  transition: var(--transition-all);
+  color: var(--color-text-secondary);
 }
 
 .pageBtn:hover:not(:disabled) {
-  border-color: #695CCD;
-  color: #695CCD;
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }
 
 .pageBtn:disabled {
@@ -148,25 +141,25 @@ const visiblePages = computed(() => {
 }
 
 .pageBtn.active {
-  background: #695CCD;
-  border-color: #695CCD;
-  color: white;
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-text-white);
 }
 
 .navBtn {
-  padding: 0 8px;
+  padding: 0 var(--spacing-sm);
 }
 
 .pageInfo {
-  font-size: 0.875rem;
-  color: #64748b;
-  margin-left: 1rem;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+  margin-left: var(--spacing-lg);
 }
 
 @media (max-width: 640px) {
   .pagination {
     flex-direction: column;
-    gap: 1rem;
+    gap: var(--spacing-lg);
   }
 
   .pageInfo {

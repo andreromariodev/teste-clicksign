@@ -358,7 +358,6 @@ interface Emits {
 const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
 
-// Dropdown state
 const isDropdownOpen = ref(false)
 const dropdownToggle = ref<HTMLButtonElement>()
 
@@ -387,7 +386,6 @@ const onDelete = () => {
   emit('delete', props.project.id)
 }
 
-// Dropdown functions
 const toggleDropdown = async () => {
   isDropdownOpen.value = !isDropdownOpen.value
   if (isDropdownOpen.value) {
@@ -399,7 +397,7 @@ const toggleDropdown = async () => {
 const closeDropdown = () => {
   setTimeout(() => {
     isDropdownOpen.value = false
-  }, 150) // Delay para permitir cliques nos itens
+  }, 150)
 }
 
 const handleDelete = () => {
@@ -410,30 +408,30 @@ const handleDelete = () => {
 
 <style module>
 .projectCard {
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  background: var(--color-background-primary);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
   overflow: hidden;
-  transition: all 0.2s ease;
+  transition: var(--transition-all);
   height: 100%;
   display: flex;
   flex-direction: column;
 }
 
 .projectCard:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--card-shadow-hover);
   transform: translateY(-2px);
 }
 
 .cardHeader {
   position: relative;
-  height: 232px;
+  height: var(--project-card-cover-height);
 }
 
 .coverContainer {
   width: 100%;
   height: 100%;
-  background: #f1f5f9;
+  background: var(--color-background-muted);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -446,17 +444,17 @@ const handleDelete = () => {
 }
 
 .placeholderCover {
-  color: #94a3b8;
-  font-size: 2rem;
+  color: var(--color-text-light);
+  font-size: var(--font-size-2xl);
 }
 
 .mainActions {
   position: absolute;
-  bottom: 12px;
-  right: 12px;
+  bottom: var(--spacing-md);
+  right: var(--spacing-md);
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: var(--spacing-xl);
 }
 
 .favoriteBtn {
@@ -470,60 +468,60 @@ const handleDelete = () => {
 }
 
 .cardBody {
-  padding: 1rem;
+  padding: var(--card-padding);
   flex: 1;
 }
 
 .projectName {
-  font-size: 1.25rem;
-  font-weight: bold;
-  color: #1F1283;
-  margin-bottom: 0.5rem;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-sm);
 }
 
 .clientName {
-  color: #717171;
-  margin-bottom: 1rem;
+  color: var(--color-text-muted);
+  margin-bottom: var(--spacing-lg);
 }
 
 .dates {
-  margin-bottom: 0.75rem;
-  padding-top: 1rem;
-  border-top: 1px solid #ECECEC;
+  margin-bottom: var(--spacing-md);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--color-border-muted);
 }
 
 .dateItem {
   display: flex;
-  gap: 16px;
+  gap: var(--spacing-lg);
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: var(--spacing-lg);
 }
 
 .dateLabel {
-  color: #717171;
+  color: var(--color-text-muted);
 }
 
 .dateValue {
-  font-weight: 400;
-  color: #374151;
+  font-weight: var(--font-weight-normal);
+  color: var(--color-text-secondary);
 }
 
 .dateValue.overdue {
-  color: #ef4444;
+  color: var(--color-error);
 }
 
 .dateValue.nearDeadline {
-  color: #f59e0b;
+  color: var(--color-warning);
 }
 
 .deadlineWarning {
-  background: #fef3c7;
-  color: #92400e;
-  padding: 0.5rem;
-  border-radius: 6px;
-  font-size: 0.75rem;
+  background: var(--color-warning-bg);
+  color: var(--color-warning-text);
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
   text-align: center;
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
 }
 
 .cardActions {
@@ -536,61 +534,61 @@ const handleDelete = () => {
 }
 
 .actionsToggle {
-  padding: 0.5rem;
-  border-radius: 50%;
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-round);
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
-  background: #fff;
-  color: #475569;
-  box-shadow: 0px 4px 4px 0px #00000040;
+  transition: var(--transition-all);
+  background: var(--color-background-primary);
+  color: var(--color-text-light);
+  box-shadow: var(--shadow-sm);
   transform: rotate(-90deg);
 }
 
 .actionsToggle:hover {
-  background: #e2e8f0;
+  background: var(--color-background-muted);
 }
 
 .dropdownMenu {
   position: absolute;
   right: 0;
-  top: calc(100% + 4px);
-  background: white;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  top: calc(100% + var(--spacing-xs));
+  background: var(--color-background-primary);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
   min-width: 120px;
-  z-index: 1000;
+  z-index: var(--z-index-dropdown);
   overflow: hidden;
 }
 
 .dropdownItem {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--spacing-sm);
   width: 100%;
-  padding: 0.75rem 1rem;
+  padding: var(--spacing-md) var(--spacing-lg);
   border: none;
   background: none;
   cursor: pointer;
-  font-size: 0.875rem;
+  font-size: var(--font-size-sm);
   text-decoration: none;
-  color: #374151;
-  transition: background-color 0.2s ease;
+  color: var(--color-text-secondary);
+  transition: var(--transition-normal);
 }
 
 .dropdownItem:hover {
-  background: #f9fafb;
+  background: var(--color-hover);
 }
 
 .deleteItem {
-  color: #dc2626;
+  color: var(--color-error-text);
 }
 
 .deleteItem:hover {
-  background: #fef2f2;
+  background: var(--color-error-bg);
 }
 </style>

@@ -83,13 +83,13 @@ const toggleSortOrder = () => {
 <style module>
 .filtersContainer {
   display: flex;
-  gap: 1.5rem;
+  gap: var(--spacing-xl);
   align-items: center;
   flex-wrap: wrap;
-  padding: 1rem;
-  background: white;
-  border-radius: 8px;
-  border: 1px solid #e2e8f0;
+  padding: var(--spacing-lg);
+  background: var(--color-background-primary);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-primary);
 }
 
 .filterGroup {
@@ -100,11 +100,11 @@ const toggleSortOrder = () => {
 .checkboxLabel {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--spacing-sm);
   cursor: pointer;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #374151;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
 }
 
 .checkbox {
@@ -114,65 +114,65 @@ const toggleSortOrder = () => {
 .checkboxText {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  transition: all 0.2s ease;
-  color: #64748b;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border: 1px solid var(--color-border-secondary);
+  border-radius: var(--radius-md);
+  transition: var(--transition-all);
+  color: var(--color-text-light);
 }
 
 .checkboxLabel:hover .checkboxText {
-  border-color: #695CCD;
-  color: #374151;
+  border-color: var(--color-border-hover);
+  color: var(--color-text-secondary);
 }
 
 .checkbox:checked + .checkboxText {
-  background: #695CCD;
-  border-color: #695CCD;
-  color: white;
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-text-white);
 }
 
 .selectLabel {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #374151;
+  gap: var(--spacing-sm);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
 }
 
 .select {
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  padding: 0.5rem 0.75rem;
-  font-size: 0.875rem;
-  background: white;
+  border: var(--input-border);
+  border-radius: var(--input-radius);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-sm);
+  background: var(--color-background-primary);
   cursor: pointer;
-  transition: border-color 0.2s ease;
+  transition: var(--transition-normal);
 }
 
 .select:focus {
   outline: none;
-  border-color: #695CCD;
+  border: var(--input-border-focus);
 }
 
 .sortOrderBtn {
-  background: #f8fafc;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  padding: 0.5rem;
+  background: var(--color-background-secondary);
+  border: 1px solid var(--color-border-secondary);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm);
   cursor: pointer;
-  color: #64748b;
-  transition: all 0.2s ease;
+  color: var(--color-text-light);
+  transition: var(--transition-all);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .sortOrderBtn:hover {
-  border-color: #695CCD;
-  color: #374151;
+  border-color: var(--color-border-hover);
+  color: var(--color-text-secondary);
 }
 
 .sortOrderBtn.desc {
@@ -187,7 +187,7 @@ const toggleSortOrder = () => {
   .filtersContainer {
     flex-direction: column;
     align-items: stretch;
-    gap: 1rem;
+    gap: var(--spacing-lg);
   }
 
   .filterGroup {
