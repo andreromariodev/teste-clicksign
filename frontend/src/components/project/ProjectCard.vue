@@ -565,6 +565,17 @@ const handleDelete = () => {
   overflow: hidden;
 }
 
+.dropdownMenu::before {
+  content: '';
+  display: block;
+  width: 12px;
+  height: 9px;
+  background: url('data:image/svg+xml;utf8,<svg width="12" height="9" viewBox="0 0 12 9" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.20759 1.02937C5.6079 0.509358 6.3921 0.509358 6.79241 1.02937L11.6888 7.39001C12.195 8.04757 11.7263 9 10.8964 9H1.10358C0.273737 9 -0.195026 8.04757 0.311171 7.39001L5.20759 1.02937Z" fill="white"/></svg>') no-repeat center/contain;
+  position: absolute;
+  top: -8px;
+  right: 10px;
+}
+
 .dropdownItem {
   display: flex;
   align-items: center;
@@ -574,9 +585,10 @@ const handleDelete = () => {
   border: none;
   background: none;
   cursor: pointer;
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-md);
+  font-weight: 500;
   text-decoration: none;
-  color: var(--color-text-secondary);
+  color: var(--color-primary);
   transition: var(--transition-normal);
 }
 

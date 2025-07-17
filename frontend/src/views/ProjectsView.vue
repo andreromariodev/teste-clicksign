@@ -5,9 +5,7 @@
         <!-- Header -->
         <div :class="$style.header">
           <div :class="$style.titleSection">
-            <h1 :class="$style.title">
-              Projetos ({{ totalProjects }})
-            </h1>
+            <h1 :class="$style.title">Projetos ({{ totalProjects }})</h1>
           </div>
 
           <div :class="$style.topFilters">
@@ -19,16 +17,10 @@
                 :class="$style.checkbox"
               />
               <span :class="$style.toggleText"></span>
-              <span>
-                Apenas Favoritos
-              </span>
+              <span> Apenas Favoritos </span>
             </label>
             <div :class="$style.sortSection">
-              <select
-                :value="sortBy"
-                @change="onSortChange"
-                :class="$style.sortSelect"
-              >
+              <select :value="sortBy" @change="onSortChange" :class="$style.sortSelect">
                 <option value="name">Ordem alfabética</option>
                 <option value="startDate">Data de início</option>
                 <option value="endDate">Data de finalização</option>
@@ -36,7 +28,24 @@
             </div>
 
             <router-link to="/projects/new" :class="$style.newProjectBtn">
-              Novo projeto
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                  stroke="white"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path d="M12 8V16" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M8 12H16" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+
+              <span>Novo projeto</span>
             </router-link>
           </div>
         </div>
@@ -55,17 +64,32 @@
         <!-- Empty State -->
         <div v-else-if="!hasProjects && !loading" :class="$style.emptyState">
           <div :class="$style.emptyIcon">
-            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9 12H15M9 16H15M17 21H7C5.89543 21 5 20.1046 5 19V5C5 3.89543 5.89543 3 7 3H12.5858C12.851 3 13.1054 3.10536 13.2929 3.29289L19.7071 9.70711C19.8946 9.89464 20 10.149 20 10.4142V19C20 20.1046 19.1046 21 18 21H17ZM17 21V10L12 5" stroke="currentColor" stroke-width="2"/>
+            <svg
+              width="64"
+              height="64"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M9 12H15M9 16H15M17 21H7C5.89543 21 5 20.1046 5 19V5C5 3.89543 5.89543 3 7 3H12.5858C12.851 3 13.1054 3.10536 13.2929 3.29289L19.7071 9.70711C19.8946 9.89464 20 10.149 20 10.4142V19C20 20.1046 19.1046 21 18 21H17ZM17 21V10L12 5"
+                stroke="currentColor"
+                stroke-width="2"
+              />
             </svg>
           </div>
           <h3 :class="$style.emptyTitle">
-            {{ searchTerm || onlyFavorites ? 'Nenhum projeto encontrado' : 'Nenhum projeto cadastrado' }}
+            {{
+              searchTerm || onlyFavorites
+                ? 'Nenhum projeto encontrado'
+                : 'Nenhum projeto cadastrado'
+            }}
           </h3>
           <p :class="$style.emptyDescription">
-            {{ searchTerm || onlyFavorites
-              ? 'Tente ajustar os filtros ou criar um novo projeto.'
-              : 'Comece criando seu primeiro projeto.'
+            {{
+              searchTerm || onlyFavorites
+                ? 'Tente ajustar os filtros ou criar um novo projeto.'
+                : 'Comece criando seu primeiro projeto.'
             }}
           </p>
           <router-link to="/projects/new" :class="$style.createBtn">
@@ -103,9 +127,9 @@
           :show="deleteModal.show"
           :loading="deleteModal.loading"
           title="Remover projeto"
-          :message="`Tem certeza que deseja remover o projeto '${deleteModal.projectName}'?`"
-          description="Esta ação não poderá ser desfeita."
-          confirm-text="Remover"
+          description="Essa ação removerá definitivamente o projeto:"
+          :project-name="deleteModal.projectName"
+          confirm-text="Confirmar"
           cancel-text="Cancelar"
           @confirm="confirmDelete"
           @cancel="hideDeleteModal"
@@ -146,7 +170,7 @@ const {
   setSorting,
   setPage,
   nextPage,
-  prevPage
+  prevPage,
 } = useProjects()
 
 const { searchHistory, addToHistory, clearHistory } = useSearchHistory()
@@ -159,7 +183,7 @@ const deleteModal = ref({
   show: false,
   loading: false,
   projectId: '',
-  projectName: ''
+  projectName: '',
 })
 
 const onSearch = (term: string) => {
@@ -236,13 +260,13 @@ const goToPrevPage = () => {
 }
 
 const showDeleteModal = (projectId: string) => {
-  const project = projects.value.find(p => p.id === projectId)
+  const project = projects.value.find((p) => p.id === projectId)
   if (project) {
     deleteModal.value = {
       show: true,
       loading: false,
       projectId,
-      projectName: project.name
+      projectName: project.name,
     }
   }
 }
@@ -264,36 +288,42 @@ const confirmDelete = async () => {
 }
 
 // Observar mudanças na rota para sincronizar o estado
-watch(() => route.query, (newQuery) => {
-  // Sincronizar busca
-  const searchFromUrl = (newQuery.search as string) || ''
-  if (searchFromUrl !== searchTerm.value) {
-    searchTerm.value = searchFromUrl
-    setSearch(searchFromUrl)
-  }
+watch(
+  () => route.query,
+  (newQuery) => {
+    // Sincronizar busca
+    const searchFromUrl = (newQuery.search as string) || ''
+    if (searchFromUrl !== searchTerm.value) {
+      searchTerm.value = searchFromUrl
+      setSearch(searchFromUrl)
+    }
 
-  // Sincronizar favoritos
-  const favoritesFromUrl = newQuery.favorites === 'true'
-  if (favoritesFromUrl !== onlyFavorites.value) {
-    onlyFavorites.value = favoritesFromUrl
-    setOnlyFavorites(favoritesFromUrl)
-  }
+    // Sincronizar favoritos
+    const favoritesFromUrl = newQuery.favorites === 'true'
+    if (favoritesFromUrl !== onlyFavorites.value) {
+      onlyFavorites.value = favoritesFromUrl
+      setOnlyFavorites(favoritesFromUrl)
+    }
 
-  // Sincronizar ordenação
-  const sortFromUrl = (newQuery.sort as string) || 'name'
-  const validSorts = ['name', 'startDate', 'endDate'] as const
-  const sortValue = validSorts.includes(sortFromUrl as any) ? sortFromUrl as 'name' | 'startDate' | 'endDate' : 'name'
-  if (sortValue !== sortBy.value) {
-    sortBy.value = sortValue
-    setSorting(sortBy.value, 'asc')
-  }
+    // Sincronizar ordenação
+    const sortFromUrl = (newQuery.sort as string) || 'name'
+    const validSorts = ['name', 'startDate', 'endDate'] as const
+    const sortValue = validSorts.includes(sortFromUrl as any)
+      ? (sortFromUrl as 'name' | 'startDate' | 'endDate')
+      : 'name'
+    if (sortValue !== sortBy.value) {
+      sortBy.value = sortValue
+      setSorting(sortBy.value, 'asc')
+    }
 
-  // Sincronizar página
-  const pageFromUrl = parseInt((newQuery.page as string) || '1')
-  if (pageFromUrl !== currentPage.value) {
-    setPage(pageFromUrl)
-  }
-}, { immediate: true })
+    // Sincronizar página
+    const pageFromUrl = parseInt((newQuery.page as string) || '1')
+    if (pageFromUrl !== currentPage.value) {
+      setPage(pageFromUrl)
+    }
+  },
+  { immediate: true },
+)
 
 onMounted(async () => {
   // Inicializar valores da URL
@@ -304,7 +334,9 @@ onMounted(async () => {
   // Validar sort da URL
   const sortFromUrl = (query.sort as string) || 'name'
   const validSorts = ['name', 'startDate', 'endDate'] as const
-  sortBy.value = validSorts.includes(sortFromUrl as any) ? sortFromUrl as 'name' | 'startDate' | 'endDate' : 'name'
+  sortBy.value = validSorts.includes(sortFromUrl as any)
+    ? (sortFromUrl as 'name' | 'startDate' | 'endDate')
+    : 'name'
 
   // Aplicar os filtros
   setSearch(searchTerm.value)
@@ -340,7 +372,7 @@ onMounted(async () => {
 .topFilters {
   display: flex;
   align-items: center;
-  gap: var(--spacing-lg);
+  gap: 32px;
 }
 
 .favoritesToggle {
@@ -383,8 +415,8 @@ onMounted(async () => {
   left: 6px;
   top: 50%;
   transform: translateY(-50%);
-  width: .75rem;
-  height: .75rem;
+  width: 0.75rem;
+  height: 0.75rem;
   background: var(--color-text-white);
   border-radius: 50%;
   transition: var(--transition-all);
@@ -407,9 +439,9 @@ onMounted(async () => {
 .sortSelect {
   appearance: none;
   background: var(--color-background-primary);
-  border: 1px solid var(--color-border-secondary);
+  border: 1px solid var(--color-text-muted);
   border-radius: var(--radius-md);
-  padding: var(--spacing-sm) 2.5rem var(--spacing-sm) var(--spacing-md);
+  padding: 11px 16px;
   font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
   cursor: pointer;
@@ -417,7 +449,7 @@ onMounted(async () => {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
   background-position: right 0.5rem center;
   background-repeat: no-repeat;
-  background-size: 1.5em 1.5em;
+  background-size: 2em 2em;
   transition: var(--transition-normal);
 }
 
@@ -433,18 +465,17 @@ onMounted(async () => {
   gap: var(--spacing-sm);
   background: var(--color-primary);
   color: var(--color-text-white);
-  padding: var(--spacing-sm) var(--spacing-lg);
-  border-radius: var(--radius-md);
+  padding: 9px 27px;
+  border-radius: 30px;
   text-decoration: none;
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-md);
   font-weight: var(--font-weight-medium);
   transition: var(--transition-all);
   white-space: nowrap;
 }
 
 .newProjectBtn:hover {
-  background: var(--color-primary-dark);
-  transform: translateY(-1px);
+  background: #b2a8ff;
 }
 
 .searchSection {
