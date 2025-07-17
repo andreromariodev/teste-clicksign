@@ -123,13 +123,13 @@ const toggleSortOrder = () => {
 }
 
 .checkboxLabel:hover .checkboxText {
-  border-color: #8b5cf6;
+  border-color: #695CCD;
   color: #374151;
 }
 
 .checkbox:checked + .checkboxText {
-  background: #8b5cf6;
-  border-color: #8b5cf6;
+  background: #695CCD;
+  border-color: #695CCD;
   color: white;
 }
 
@@ -154,7 +154,7 @@ const toggleSortOrder = () => {
 
 .select:focus {
   outline: none;
-  border-color: #8b5cf6;
+  border-color: #695CCD;
 }
 
 .sortOrderBtn {
@@ -171,7 +171,7 @@ const toggleSortOrder = () => {
 }
 
 .sortOrderBtn:hover {
-  border-color: #8b5cf6;
+  border-color: #695CCD;
   color: #374151;
 }
 

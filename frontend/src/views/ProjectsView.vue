@@ -246,7 +246,7 @@ onMounted(async () => {
   width: 40px;
   height: 40px;
   border: 3px solid #f1f5f9;
-  border-top: 3px solid #8b5cf6;
+  border-top: 3px solid #695CCD;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin-bottom: 1rem;
@@ -299,7 +299,7 @@ onMounted(async () => {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: #8b5cf6;
+  background: #695CCD;
   color: white;
   padding: 0.75rem 1.5rem;
   border-radius: 8px;

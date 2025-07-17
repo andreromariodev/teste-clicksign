@@ -179,7 +179,7 @@ watch(showHistory, (show) => {
 
 .input:focus {
   outline: none;
-  border-color: #8b5cf6;
+  border-color: #695CCD;
   box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
 }
 
@@ -217,8 +217,8 @@ watch(showHistory, (show) => {
 
 .historyBtn:hover,
 .historyBtn.active {
-  background: #8b5cf6;
-  border-color: #8b5cf6;
+  background: #695CCD;
+  border-color: #695CCD;
   color: white;
 }
 

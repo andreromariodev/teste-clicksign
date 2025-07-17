@@ -439,7 +439,7 @@ onMounted(() => {
 
 .input:focus {
   outline: none;
-  border-color: #8b5cf6;
+  border-color: #695CCD;
   box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
 }
 
@@ -485,7 +485,7 @@ onMounted(() => {
 }
 
 .fileInputDisplay:hover {
-  border-color: #8b5cf6;
+  border-color: #695CCD;
   background-color: #faf7ff;
 }
 
@@ -548,7 +548,7 @@ onMounted(() => {
 }
 
 .checkboxLabel:hover {
-  border-color: #8b5cf6;
+  border-color: #695CCD;
 }
 
 .checkbox {
@@ -564,7 +564,7 @@ onMounted(() => {
 }
 
 .checkbox:checked + .checkboxText {
-  color: #8b5cf6;
+  color: #695CCD;
 }
 
 .formActions {
@@ -606,7 +606,7 @@ onMounted(() => {
 }
 
 .btnPrimary {
-  background: #8b5cf6;
+  background: #695CCD;
   color: white;
 }
 

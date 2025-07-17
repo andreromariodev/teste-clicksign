@@ -18,7 +18,7 @@ import { RouterView } from 'vue-router'
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-family: 'Encode Sans Semi Expanded', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   background-color: #f8fafc;
   color: #334155;
   line-height: 1.6;
@@ -40,7 +40,7 @@ button:disabled {
 }
 
 .btn-primary {
-  background-color: #8b5cf6;
+  background-color: #695CCD;
   color: white;
 }
 
@@ -82,7 +82,7 @@ input, textarea, select {
 
 input:focus, textarea:focus, select:focus {
   outline: none;
-  border-color: #8b5cf6;
+  border-color: #695CCD;
   box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
 }
 

@@ -138,8 +138,8 @@ const visiblePages = computed(() => {
 }
 
 .pageBtn:hover:not(:disabled) {
-  border-color: #8b5cf6;
-  color: #8b5cf6;
+  border-color: #695CCD;
+  color: #695CCD;
 }
 
 .pageBtn:disabled {
@@ -148,8 +148,8 @@ const visiblePages = computed(() => {
 }
 
 .pageBtn.active {
-  background: #8b5cf6;
-  border-color: #8b5cf6;
+  background: #695CCD;
+  border-color: #695CCD;
   color: white;
 }
 

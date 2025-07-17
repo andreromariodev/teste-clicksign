@@ -4,10 +4,11 @@
       <div class="container">
         <div :class="$style.headerContent">
           <div :class="$style.logo">
-            <h1>Gerenciador de Projetos</h1>
+            <router-link to="/">
+              <img :src="logoUrl" :alt="'Logo Gerenciador de Projetos'" :class="$style.logoImg" />
+            </router-link>
           </div>
           <nav :class="$style.nav">
-            <router-link to="/" :class="$style.navLink">Projetos</router-link>
             <router-link to="/projects/new" :class="[$style.navLink, $style.btnPrimary]">
               Novo Projeto
             </router-link>
@@ -26,6 +27,10 @@
   </div>
 </template>
 
+<script setup lang="ts">
+import logoUrl from '@/assets/logo-projeto-sg.svg'
+</script>
+
 <style module>
 .layout {
   min-height: 100vh;
@@ -34,7 +39,7 @@
 }
 
 .header {
-  background: white;
+  background: #1C1930;
   border-bottom: 1px solid #e2e8f0;
   position: sticky;
   top: 0;
@@ -49,7 +54,7 @@
 }
 
 .logo h1 {
-  color: #8b5cf6;
+  color: #695CCD;
   font-size: 1.5rem;
   font-weight: 700;
 }
@@ -75,7 +80,7 @@
 }
 
 .navLink.btnPrimary {
-  background-color: #8b5cf6;
+  background-color: #695CCD;
   color: white;
 }
 
@@ -86,5 +91,9 @@
 .main {
   flex: 1;
   padding: 2rem 0;
+}
+
+.logoImg {
+  width: 193px;
 }
 </style>
