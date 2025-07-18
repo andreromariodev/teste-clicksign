@@ -165,6 +165,8 @@ start_backend_only() {
     
     if curl -s http://localhost:3001/health > /dev/null 2>&1; then
         echo "✅ Backend iniciado (http://localhost:3001)"
+        echo "📚 API Docs: http://localhost:3001/api-docs"
+        echo "🔍 API Base: http://localhost:3001/api"
     else
         echo "❌ Falha ao iniciar backend"
     fi

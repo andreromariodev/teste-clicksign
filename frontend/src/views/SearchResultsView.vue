@@ -73,7 +73,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import AppLayout from '@/components/layout/AppLayout.vue'
 import ProjectCard from '@/components/project/ProjectCard.vue'
@@ -97,14 +97,10 @@ const {
   toggleFavorite,
   deleteProject,
   setSearch,
-  setOnlyFavorites,
-  setSorting,
   setPage,
 } = useProjects()
 
 const searchTerm = ref('')
-const onlyFavorites = ref(false)
-const sortBy = ref<'name' | 'startDate' | 'endDate'>('name')
 
 const deleteModal = ref({
   show: false,
@@ -112,22 +108,6 @@ const deleteModal = ref({
   projectId: '',
   projectName: '',
 })
-
-const onToggleFavorites = (event: Event) => {
-  const target = event.target as HTMLInputElement
-  onlyFavorites.value = target.checked
-  setOnlyFavorites(target.checked)
-
-  const query = { ...route.query }
-  if (target.checked) {
-    query.favorites = 'true'
-  } else {
-    delete query.favorites
-  }
-  query.page = '1'
-
-  router.push({ query })
-}
 
 const goToPage = (page: number) => {
   const query = { ...route.query, page: page.toString() }
@@ -177,17 +157,8 @@ const confirmDelete = async () => {
 onMounted(async () => {
   const query = route.query
   searchTerm.value = (query.search as string) || ''
-  onlyFavorites.value = query.favorites === 'true'
-
-  const sortFromUrl = (query.sort as string) || 'name'
-  const validSorts = ['name', 'startDate', 'endDate'] as const
-  sortBy.value = validSorts.includes(sortFromUrl as any)
-    ? (sortFromUrl as 'name' | 'startDate' | 'endDate')
-    : 'name'
 
   setSearch(searchTerm.value)
-  setOnlyFavorites(onlyFavorites.value)
-  setSorting(sortBy.value, 'asc')
   setPage(parseInt((query.page as string) || '1'))
 
   await loadProjects()
@@ -231,77 +202,6 @@ onMounted(async () => {
 .backBtn:hover {
   color: var(--color-text-light);
   background-color: var(--color-background-secondary);
-}
-
-.filtersSection {
-  margin-bottom: 2rem;
-}
-
-.topFilters {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.favoritesToggle {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
-  font-weight: 500;
-  color: var(--color-text-secondary);
-}
-
-.checkbox {
-  width: 1.25rem;
-  height: 1.25rem;
-  border: 2px solid var(--color-border-secondary);
-  border-radius: var(--radius-xs);
-  cursor: pointer;
-  accent-color: var(--color-text-primary);
-}
-
-.toggleText {
-  display: none;
-}
-
-.sortSection {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.sortSelect {
-  padding: 0.5rem 1rem;
-  border: 1px solid var(--color-border-secondary);
-  border-radius: var(--radius-md);
-  font-size: 0.875rem;
-  cursor: pointer;
-  background-color: white;
-}
-
-.sortSelect:focus {
-  outline: none;
-  border-color: var(--color-text-primary);
-}
-
-.newProjectBtn {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background-color: var(--color-text-primary);
-  color: white;
-  text-decoration: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--radius-md);
-  font-weight: 500;
-  transition: all 0.2s ease;
-}
-
-.newProjectBtn:hover {
-  background-color: var(--color-info);
 }
 
 .loading {
@@ -360,30 +260,6 @@ onMounted(async () => {
   margin: 0;
 }
 
-.emptyDescription {
-  color: var(--color-gray-light);
-  font-size: 1rem;
-  margin: 0;
-}
-
-.createBtn {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background-color: var(--color-text-primary);
-  color: white;
-  text-decoration: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--radius-md);
-  font-weight: 500;
-  transition: all 0.2s ease;
-  margin-top: 1rem;
-}
-
-.createBtn:hover {
-  background-color: #1e1b4b;
-}
-
 .projectsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -394,12 +270,6 @@ onMounted(async () => {
 @media (max-width: 768px) {
   .searchResultsPage {
     padding: 1rem 0;
-  }
-
-  .topFilters {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 1rem;
   }
 
   .projectsGrid {

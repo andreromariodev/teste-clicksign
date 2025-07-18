@@ -64,24 +64,6 @@ export const useToast = () => {
     })
   }
 
-  const showWarning = (title: string, message?: string, options?: Partial<Toast>) => {
-    return addToast({
-      type: 'warning',
-      title,
-      message,
-      ...options,
-    })
-  }
-
-  const showInfo = (title: string, message?: string, options?: Partial<Toast>) => {
-    return addToast({
-      type: 'info',
-      title,
-      message,
-      ...options,
-    })
-  }
-
   return {
     toasts: toasts.value,
     addToast,
@@ -89,7 +71,5 @@ export const useToast = () => {
     clearAllToasts,
     showSuccess,
     showError,
-    showWarning,
-    showInfo,
   }
 }

@@ -5,6 +5,7 @@ import path from 'path';
 import connectDB from './config/database';
 import projectRoutes from './routes/projectRoutes';
 import ProjectService from './services/ProjectService';
+import { setupSwagger } from './config/swagger';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -19,6 +20,9 @@ const startServer = async () => {
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
 
+    // Configurar Swagger
+    setupSwagger(app);
+
     // Servir arquivos estáticos (uploads)
     app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
@@ -32,6 +36,11 @@ const startServer = async () => {
         database: 'connected',
         timestamp: new Date().toISOString() 
       });
+    });
+
+    // Rota de documentação
+    app.get('/', (req, res) => {
+      res.redirect('/api-docs');
     });
 
     // Middleware de tratamento de erros

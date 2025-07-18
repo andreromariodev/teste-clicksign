@@ -30,9 +30,6 @@ class ProjectService {
           { name: searchRegex },
           { client: searchRegex }
         ];
-        
-        // Adicionar ao histórico de busca
-        await this.addToSearchHistory(filters.search);
       }
 
       // Filtro de favoritos
@@ -186,36 +183,6 @@ class ProjectService {
   }
 
   // Métodos para histórico de busca
-  private async addToSearchHistory(searchTerm: string): Promise<void> {
-    try {
-      // Verificar se o termo já existe
-      const existing = await SearchHistoryModel.findOne({ term: searchTerm });
-      
-      if (existing) {
-        // Atualizar a data se já existe
-        existing.createdAt = new Date();
-        await existing.save();
-      } else {
-        // Criar novo registro
-        await SearchHistoryModel.create({ term: searchTerm });
-      }
-
-      // Manter apenas os últimos 5 termos
-      const allHistory = await SearchHistoryModel.find()
-        .sort({ createdAt: -1 })
-        .exec();
-
-      if (allHistory.length > 5) {
-        const toDelete = allHistory.slice(5);
-        await SearchHistoryModel.deleteMany({
-          _id: { $in: toDelete.map(h => h._id) }
-        });
-      }
-    } catch (error) {
-      console.error('Erro ao salvar histórico de busca:', error);
-    }
-  }
-
   async getSearchHistory(): Promise<string[]> {
     try {
       const history = await SearchHistoryModel.find()
@@ -227,14 +194,6 @@ class ProjectService {
     } catch (error) {
       console.error('Erro ao buscar histórico:', error);
       return [];
-    }
-  }
-
-  async clearSearchHistory(): Promise<void> {
-    try {
-      await SearchHistoryModel.deleteMany({});
-    } catch (error) {
-      console.error('Erro ao limpar histórico:', error);
     }
   }
 

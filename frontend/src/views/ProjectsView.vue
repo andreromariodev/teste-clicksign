@@ -157,7 +157,7 @@ const {
   setPage,
 } = useProjects()
 
-const { addToHistory, clearHistory } = useSearchHistory()
+const { addToHistory } = useSearchHistory()
 
 const searchTerm = ref('')
 const onlyFavorites = ref(false)

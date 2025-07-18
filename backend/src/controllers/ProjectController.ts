@@ -2,6 +2,14 @@ import { Request, Response } from 'express';
 import ProjectService from '../services/ProjectService';
 import { CreateProjectDto, UpdateProjectDto, ProjectFilters } from '../models/Project';
 
+/**
+ * @swagger
+ * tags:
+ *   - name: Projetos
+ *     description: Operações relacionadas aos projetos
+ *   - name: Histórico
+ *     description: Operações relacionadas ao histórico de buscas
+ */
 class ProjectController {
   async getAllProjects(req: Request, res: Response): Promise<void> {
     try {
@@ -134,15 +142,6 @@ class ProjectController {
     try {
       const history = await ProjectService.getSearchHistory();
       res.json(history);
-    } catch (error) {
-      res.status(500).json({ error: 'Internal server error' });
-    }
-  }
-
-  async clearSearchHistory(req: Request, res: Response): Promise<void> {
-    try {
-      await ProjectService.clearSearchHistory();
-      res.status(204).send();
     } catch (error) {
       res.status(500).json({ error: 'Internal server error' });
     }

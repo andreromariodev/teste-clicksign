@@ -452,19 +452,6 @@ frontend/dist/         # Assets estáticos otimizados
 - [x] Scripts de automação
 - [x] Tratamento de erros
 
-### Próximos Passos 📋
-- [ ] Testes unitários e e2e (Jest + Vitest)
-- [ ] Sistema de autenticação JWT
-- [ ] Documentação da API (Swagger/OpenAPI)
-- [ ] Logs estruturados (Winston)
-- [ ] Cache Redis para performance
-- [ ] Otimização de imagens (Sharp)
-- [ ] PWA (Service Workers)
-- [ ] Docker e Docker Compose
-- [ ] CI/CD com GitHub Actions
-- [ ] Monitoramento (Prometheus/Grafana)
-- [ ] Backup automático MongoDB
-
 ---
 
 ✨ **Gerenciador de Projetos**  

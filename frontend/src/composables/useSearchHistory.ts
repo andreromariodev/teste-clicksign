@@ -67,6 +67,5 @@ export function useSearchHistory() {
     addToHistory,
     clearHistory,
     removeFromHistory,
-    loadHistory
   }
 }

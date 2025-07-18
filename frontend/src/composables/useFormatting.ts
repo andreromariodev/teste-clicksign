@@ -36,11 +36,6 @@ export function useFormatting() {
     return daysUntil <= days && daysUntil >= 0
   }
 
-  const truncateText = (text: string, maxLength: number = 50): string => {
-    if (text.length <= maxLength) return text
-    return text.substring(0, maxLength) + '...'
-  }
-
   return {
     formatDate,
     formatDateInput,
@@ -48,6 +43,5 @@ export function useFormatting() {
     getDaysUntilDeadline,
     isOverdue,
     isNearDeadline,
-    truncateText
   }
 }
