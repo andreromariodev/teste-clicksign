@@ -50,7 +50,7 @@ describe('Helpers e Utilitários', () => {
       const mockDate = new Date('2024-12-25T12:00:00.000Z')
       const mockToLocaleDateString = vi.fn().mockReturnValue('25/12/2024')
       mockDate.toLocaleDateString = mockToLocaleDateString
-      
+
       // Simula o comportamento da função formatDate
       const result = mockDate.toLocaleDateString('pt-BR')
       expect(result).toBe('25/12/2024')
@@ -160,15 +160,15 @@ describe('Mocks e Simulações', () => {
 
   it('deve simular timeout', async () => {
     vi.useFakeTimers()
-    
+
     const mockTimeout = vi.fn()
     setTimeout(mockTimeout, 100)
-    
+
     // Avança o tempo
     vi.advanceTimersByTime(100)
-    
+
     expect(mockTimeout).toHaveBeenCalled()
-    
+
     vi.useRealTimers()
   })
 })

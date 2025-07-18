@@ -56,7 +56,7 @@ if (typeof URL === 'undefined') {
       this.search = ''
       this.hash = ''
     }
-    
+
     href: string
     origin: string
     protocol: string
@@ -66,7 +66,7 @@ if (typeof URL === 'undefined') {
     pathname: string
     search: string
     hash: string
-    
+
     static createObjectURL = vi.fn(() => 'blob:mock-url')
     static revokeObjectURL = vi.fn()
   }

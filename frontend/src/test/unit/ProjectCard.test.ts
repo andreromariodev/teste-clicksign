@@ -33,7 +33,7 @@ describe('ProjectCard.vue', () => {
 
   it('deve renderizar projeto com todos os dados', () => {
     const project = mockProjects[0]
-    
+
     wrapper = mount(ProjectCard, {
       props: {
         project
@@ -42,17 +42,17 @@ describe('ProjectCard.vue', () => {
 
     // Verifica se o componente foi renderizado
     expect(wrapper.exists()).toBe(true)
-    
+
     // Verifica se contém o nome do projeto
     expect(wrapper.text()).toContain(project.name)
-    
+
     // Verifica se contém o nome do cliente
     expect(wrapper.text()).toContain(project.client)
   })
 
   it('deve renderizar projeto sem imagem de capa', () => {
     const project = { ...mockProjects[0], coverImage: undefined }
-    
+
     wrapper = mount(ProjectCard, {
       props: {
         project
@@ -61,14 +61,14 @@ describe('ProjectCard.vue', () => {
 
     // Verifica se não tem imagem de capa
     expect(wrapper.find('img').exists()).toBe(false)
-    
+
     // Verifica se tem placeholder (svg)
     expect(wrapper.find('svg').exists()).toBe(true)
   })
 
   it('deve renderizar projeto com imagem de capa', () => {
     const project = { ...mockProjects[1], coverImage: 'test-image.jpg' }
-    
+
     wrapper = mount(ProjectCard, {
       props: {
         project
@@ -81,7 +81,7 @@ describe('ProjectCard.vue', () => {
 
   it('deve ter um botão de favorito', () => {
     const project = mockProjects[0]
-    
+
     wrapper = mount(ProjectCard, {
       props: {
         project
@@ -95,7 +95,7 @@ describe('ProjectCard.vue', () => {
 
   it('deve ter elementos básicos', () => {
     const project = mockProjects[0]
-    
+
     wrapper = mount(ProjectCard, {
       props: {
         project

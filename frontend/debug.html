@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Frontend</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <h1>Debug Frontend</h1>
+    <button onclick="testProjectService()">Test Project Service</button>
+    <div id="result"></div>
+    
+    <script>
+        async function testProjectService() {
+            try {
+                console.log('Testing ProjectService...');
+                const api = axios.create({
+                    baseURL: 'http://localhost:3001/api',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const response = await api.get('/projects');
+                console.log('Raw response:', response);
+                
+                const backendResponse = response.data;
+                console.log('Backend response:', backendResponse);
+                
+                const result = {
+                    data: backendResponse.data,
+                    total: backendResponse.pagination.total,
+                    page: backendResponse.pagination.page,
+                    totalPages: backendResponse.pagination.totalPages,
+                    hasNextPage: backendResponse.pagination.hasNext,
+                    hasPrevPage: backendResponse.pagination.hasPrev
+                };
+                
+                console.log('Processed result:', result);
+                document.getElementById('result').innerHTML = '<pre>' + JSON.stringify(result, null, 2) + '</pre>';
+                
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('result').innerHTML = '<pre style="color: red;">' + error.message + '</pre>';
+            }
+        }
+    </script>
+</body>
+</html>

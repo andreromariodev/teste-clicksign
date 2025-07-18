@@ -10,7 +10,7 @@ vi.mock('axios', () => {
     delete: vi.fn(),
     patch: vi.fn(),
   }
-  
+
   return {
     default: {
       create: vi.fn(() => mockAxiosInstance)

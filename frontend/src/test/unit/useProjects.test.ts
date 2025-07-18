@@ -14,7 +14,7 @@ const mockToast = useToast as any
 describe('useProjects', () => {
   beforeEach(() => {
     vi.clearAllMocks()
-    
+
     // Setup dos mocks
     mockToast.mockReturnValue({
       showError: vi.fn(),
@@ -67,7 +67,7 @@ describe('useProjects', () => {
       const { loading, loadProjects } = useProjects()
 
       const loadPromise = loadProjects()
-      
+
       // Durante o carregamento
       expect(loading.value).toBe(true)
 
@@ -277,7 +277,7 @@ describe('useProjects', () => {
       setSearch('website')
 
       expect(filters.value.search).toBe('website')
-      
+
       await loadProjects()
 
       expect(mockProjectService.getAllProjects).toHaveBeenCalledWith(
@@ -295,7 +295,7 @@ describe('useProjects', () => {
       setOnlyFavorites(true)
 
       expect(filters.value.onlyFavorites).toBe(true)
-      
+
       await loadProjects()
 
       expect(mockProjectService.getAllProjects).toHaveBeenCalledWith(
@@ -314,7 +314,7 @@ describe('useProjects', () => {
 
       expect(filters.value.sortBy).toBe('startDate')
       expect(filters.value.sortOrder).toBe('desc')
-      
+
       await loadProjects()
 
       expect(mockProjectService.getAllProjects).toHaveBeenCalledWith(
@@ -333,7 +333,7 @@ describe('useProjects', () => {
       setPage(2)
 
       expect(filters.value.page).toBe(2)
-      
+
       await loadProjects()
 
       expect(mockProjectService.getAllProjects).toHaveBeenCalledWith(

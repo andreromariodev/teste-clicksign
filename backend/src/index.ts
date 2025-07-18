@@ -27,7 +27,7 @@ const startServer = async () => {
     app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
     // Rotas
-    app.use('/api', projectRoutes);
+    app.use('/api/projects', projectRoutes);
 
     // Rota de health check
     app.get('/health', (req, res) => {

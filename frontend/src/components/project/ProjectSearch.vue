@@ -80,7 +80,7 @@ const emit = defineEmits<Emits>()
 const searchTerm = ref(props.modelValue)
 const showHistory = ref(false)
 
-let searchTimeout: number | null = null
+let searchTimeout: NodeJS.Timeout | null = null
 
 watch(() => props.modelValue, (newValue) => {
   searchTerm.value = newValue

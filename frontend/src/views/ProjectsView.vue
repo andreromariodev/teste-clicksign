@@ -2,7 +2,7 @@
   <AppLayout>
     <div class="container">
       <div :class="$style.projectsPage">
-        <div v-if="hasProjects" :class="$style.header">
+        <div v-if="hasProjects || onlyFavorites" :class="$style.header">
           <div :class="$style.titleSection">
             <h1 :class="$style.title">Projetos ({{ totalProjects }})</h1>
           </div>
@@ -58,12 +58,47 @@
           {{ error }}
         </div>
 
-        <div v-else-if="!hasProjects && !loading" :class="$style.emptyState">
-          <h3 :class="$style.emptyTitle">
-            Nenhum projeto
+        <div v-else-if="!hasProjects && !onlyFavorites && !loading" :class="$style.emptyState">
+          <div :class="$style.emptyIcon">
+            <svg
+              v-if="hasActiveFilters"
+              width="64"
+              height="64"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M21 21L16.514 16.506L21 21ZM19 10.5C19 15.194 15.194 19 10.5 19C5.806 19 2 15.194 2 10.5C2 5.806 5.806 2 10.5 2C15.194 2 19 5.806 19 10.5Z"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <svg
+              v-else
+              width="64"
+              height="64"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M9 12H15M9 16H15M17 21H7C5.89543 21 5 20.1046 5 19V5C5 3.89543 5.89543 3 7 3H12.5858C12.851 3 13.1054 3.10536 13.2929 3.29289L19.7071 9.70711C19.8946 9.89464 20 10.149 20 10.4142V19C20 20.1046 19.1046 21 18 21H17ZM17 21V10L12 5"
+                stroke="currentColor"
+                stroke-width="2"
+              />
+            </svg>
+          </div>
+          <h3 :class="$style.emptyTitle" data-testid="empty-title">
+            {{ hasActiveFilters ? 'Nenhum projeto encontrado' : 'Nenhum projeto cadastrado' }}
           </h3>
-          <p :class="$style.emptyDescription">
-            Clique no botão abaixo para criar o primeiro e gerenciá-lo.
+          <p :class="$style.emptyDescription" data-testid="empty-description">
+            {{ hasActiveFilters
+              ? 'Tente ajustar os filtros ou criar um novo projeto.'
+              : 'Clique no botão abaixo para criar o primeiro e gerenciá-lo.'
+            }}
           </p>
           <router-link to="/projects/new" :class="$style.createBtn">
             <svg
@@ -127,7 +162,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import AppLayout from '@/components/layout/AppLayout.vue'
 import ProjectCard from '@/components/project/ProjectCard.vue'
@@ -168,6 +203,11 @@ const deleteModal = ref({
   loading: false,
   projectId: '',
   projectName: '',
+})
+
+// Computed property para detectar filtros ativos
+const hasActiveFilters = computed(() => {
+  return searchTerm.value.trim() !== '' || onlyFavorites.value
 })
 
 const onSearch = (term: string) => {
