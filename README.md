@@ -1,5 +1,5 @@
 - Este projeto foi desenvolvido como teste para a vaga de Desenvolvedor Front-end Sênior na Clicksign.
-- Autor: André Romá## 📋 Campos do Projeto
+- Autor: André Romário
 
 ### Estrutura dos Dados
 - **Nome do projeto** (obrigatório) - String, máximo 200 caracteres
