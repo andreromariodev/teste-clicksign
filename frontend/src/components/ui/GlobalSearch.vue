@@ -1,6 +1,5 @@
 <template>
   <div :class="$style.searchContainer">
-    <!-- Botão para abrir a busca -->
     <button
       @click="toggleSearch"
       :class="[$style.searchButton, { [$style.active]: isOpen }]"
@@ -11,12 +10,10 @@
       </svg>
     </button>
 
-    <!-- Modal/Dropdown de busca -->
     <Teleport to="body">
       <div v-if="isOpen" :class="$style.searchOverlay" @click="closeSearch">
         <div :class="$style.searchModal" @click.stop>
           <div :class="$style.searchContent">
-            <!-- Input de busca -->
             <div :class="$style.searchInputContainer">
               <div :class="$style.searchInput">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -45,7 +42,6 @@
               </div>
             </div>
 
-            <!-- Histórico de buscas -->
             <div v-if="searchHistory.length > 0" :class="$style.historySection">
               <div :class="$style.historyHeader">
                 <span :class="$style.historyTitle">Buscas recentes</span>
@@ -77,7 +73,6 @@
               </ul>
             </div>
 
-            <!-- Dica quando não há histórico -->
             <div v-else :class="$style.emptyHistory">
               <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M21 21L16.514 16.506L21 21ZM19 10.5C19 15.194 15.194 19 10.5 19C5.806 19 2 15.194 2 10.5C2 5.806 5.806 2 10.5 2C15.194 2 19 5.806 19 10.5Z" stroke="currentColor" stroke-width="2"/>
@@ -85,7 +80,6 @@
               <p>Suas buscas recentes aparecerão aqui</p>
             </div>
 
-            <!-- Ações do modal -->
             <div :class="$style.searchActions">
               <button
                 @click="() => performSearch()"
@@ -104,11 +98,10 @@
 
 <script setup lang="ts">
 import { ref, computed, nextTick, watch } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { useSearchHistory } from '@/composables/useSearchHistory'
 
 const router = useRouter()
-const route = useRoute()
 const { searchHistory, addToHistory, clearHistory, removeFromHistory } = useSearchHistory()
 
 const isOpen = ref(false)
@@ -139,7 +132,6 @@ const clearSearch = () => {
 }
 
 const onSearchInput = () => {
-  // Debounce a busca automática se estiver na página de projetos
   if (searchTimeout) {
     clearTimeout(searchTimeout)
   }
@@ -154,20 +146,13 @@ const performSearch = (addToHistoryFlag = true) => {
     addToHistory(term)
   }
 
-  // Se não estiver na página de projetos, navegar para lá
-  if (route.name !== 'projects') {
-    router.push({ name: 'projects', query: { search: term } })
-  } else {
-    // Se já estiver na página de projetos, atualizar a query
-    router.push({
-      name: 'projects',
-      query: {
-        ...route.query,
-        search: term,
-        page: '1' // Reset para primeira página
-      }
-    })
-  }
+  router.push({
+    name: 'search-results',
+    query: {
+      search: term,
+      page: '1'
+    }
+  })
 
   closeSearch()
 }
@@ -177,14 +162,12 @@ const selectFromHistory = (term: string) => {
   performSearch()
 }
 
-// Fechar modal com ESC
 const handleKeydown = (event: KeyboardEvent) => {
   if (event.key === 'Escape' && isOpen.value) {
     closeSearch()
   }
 }
 
-// Adicionar listener para ESC
 watch(isOpen, (newValue) => {
   if (newValue) {
     document.addEventListener('keydown', handleKeydown)

@@ -23,7 +23,6 @@ export class ProjectService {
 
     const response = await api.get(`/projects?${params.toString()}`)
 
-    // Transformar a resposta do backend para o formato esperado pelo frontend
     const backendResponse = response.data
     return {
       data: backendResponse.data,

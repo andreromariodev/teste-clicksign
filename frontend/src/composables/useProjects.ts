@@ -150,12 +150,10 @@ export function useProjects() {
     error,
     paginationInfo,
     filters,
-
     hasProjects,
     totalProjects,
     currentPage,
     totalPages,
-
     loadProjects,
     toggleFavorite,
     deleteProject,

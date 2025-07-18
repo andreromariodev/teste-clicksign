@@ -20,7 +20,6 @@
         <div :class="$style.formPage">
           <div :class="$style.formContainer">
             <form @submit.prevent="onSubmit" :class="$style.form">
-              <!-- Nome do Projeto -->
               <div :class="$style.formGroup">
                 <label for="name" :class="$style.label">
                   Nome do projeto <span :class="$style.required">(Obrigatório)</span>
@@ -36,7 +35,6 @@
                 <p v-if="errors.name" :class="$style.errorMessage">{{ errors.name }}</p>
               </div>
 
-              <!-- Cliente -->
               <div :class="$style.formGroup">
                 <label for="client" :class="$style.label">
                   Cliente <span :class="$style.required">(Obrigatório)</span>
@@ -52,7 +50,6 @@
                 <p v-if="errors.client" :class="$style.errorMessage">{{ errors.client }}</p>
               </div>
 
-              <!-- Datas -->
               <div :class="$style.dateRow">
                 <div :class="$style.formGroup">
                   <label for="startDate" :class="$style.label">
@@ -83,7 +80,6 @@
                 </div>
               </div>
 
-              <!-- Capa do Projeto -->
               <div :class="$style.formGroup">
                 <label for="cover" :class="$style.label">Capa do projeto</label>
                 <div :class="$style.fileInputContainer">
@@ -158,7 +154,6 @@
                 <p v-if="errors.coverImage" :class="$style.errorMessage">{{ errors.coverImage }}</p>
               </div>
 
-              <!-- Botões -->
               <div :class="$style.formActions">
                 <button type="submit" :class="[$style.btn, $style.btnPrimary]" :disabled="loading">
                   <span v-if="loading" :class="$style.spinner"></span>
@@ -166,7 +161,6 @@
                 </button>
               </div>
 
-              <!-- Error Message -->
               <div v-if="submitError" :class="$style.submitError">
                 {{ submitError }}
               </div>
@@ -227,7 +221,6 @@ const validateForm = (): boolean => {
 
   let isValid = true
 
-  // Validação do nome do projeto - pelo menos duas palavras
   if (!form.value.name.trim()) {
     errors.value.name = 'Por favor, digite ao menos duas palavras'
     isValid = false
@@ -239,7 +232,6 @@ const validateForm = (): boolean => {
     }
   }
 
-  // Validação do cliente - pelo menos uma palavra
   if (!form.value.client.trim()) {
     errors.value.client = 'Por favor, digite ao menos uma palavra'
     isValid = false

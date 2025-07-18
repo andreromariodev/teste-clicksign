@@ -10,6 +10,11 @@ const router = createRouter({
       component: ProjectsView,
     },
     {
+      path: '/search',
+      name: 'search-results',
+      component: () => import('../views/SearchResultsView.vue'),
+    },
+    {
       path: '/projects/new',
       name: 'project-create',
       component: () => import('../views/ProjectFormView.vue'),

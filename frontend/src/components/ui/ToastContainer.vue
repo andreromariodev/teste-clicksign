@@ -11,9 +11,7 @@
           ]"
           @click="removeToast(toast.id)"
         >
-          <!-- Ícone baseado no tipo -->
           <div :class="$style.iconContainer">
-            <!-- Success Icon -->
             <svg
               v-if="toast.type === 'success'"
               width="20"
@@ -31,7 +29,6 @@
               />
             </svg>
 
-            <!-- Error Icon -->
             <svg
               v-else-if="toast.type === 'error'"
               width="20"
@@ -49,7 +46,6 @@
               />
             </svg>
 
-            <!-- Warning Icon -->
             <svg
               v-else-if="toast.type === 'warning'"
               width="20"
@@ -67,7 +63,6 @@
               />
             </svg>
 
-            <!-- Info Icon -->
             <svg
               v-else
               width="20"
@@ -86,13 +81,11 @@
             </svg>
           </div>
 
-          <!-- Conteúdo do toast -->
           <div :class="$style.content">
             <h4 :class="$style.title">{{ toast.title }}</h4>
             <p v-if="toast.message" :class="$style.message">{{ toast.message }}</p>
           </div>
 
-          <!-- Botão de fechar -->
           <button :class="$style.closeBtn" @click.stop="removeToast(toast.id)" type="button">
             <svg
               width="16"
@@ -111,7 +104,6 @@
             </svg>
           </button>
 
-          <!-- Progress bar para toasts não persistentes -->
           <div
             v-if="!toast.persistent && toast.duration"
             :class="$style.progressBar"

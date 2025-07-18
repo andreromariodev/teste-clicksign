@@ -19,14 +19,13 @@ export const useToast = () => {
     const id = `toast-${++toastId}`
     const newToast: Toast = {
       id,
-      duration: 5000, // 5 segundos por padrão
+      duration: 5000,
       persistent: false,
       ...toast,
     }
 
     toasts.value.push(newToast)
 
-    // Auto remove toast após duration (se não for persistent)
     if (!newToast.persistent && newToast.duration && newToast.duration > 0) {
       setTimeout(() => {
         removeToast(id)
@@ -47,7 +46,6 @@ export const useToast = () => {
     toasts.value = []
   }
 
-  // Helpers para diferentes tipos de toast
   const showSuccess = (title: string, message?: string, options?: Partial<Toast>) => {
     return addToast({
       type: 'success',
@@ -62,7 +60,6 @@ export const useToast = () => {
       type: 'error',
       title,
       message,
-      duration: 7000, // Erros ficam mais tempo
       ...options,
     })
   }
