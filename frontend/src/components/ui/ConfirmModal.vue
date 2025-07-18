@@ -190,7 +190,7 @@ watch(() => props.show, (newShow) => {
 .title {
   font-size: 1.25rem;
   font-weight: 600;
-  color: #1F1283;
+  color: var(--color-text-primary);
   margin: 0;
 }
 

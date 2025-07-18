@@ -183,7 +183,7 @@ const toggleSortOrder = () => {
   transform: rotate(180deg);
 }
 
-@media (max-width: 768px) {
+@media (max-width: var(--media-mobile)) {
   .filtersContainer {
     flex-direction: column;
     align-items: stretch;

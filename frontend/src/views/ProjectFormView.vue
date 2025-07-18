@@ -414,9 +414,9 @@ onMounted(() => {
 }
 
 .title {
-  font-size: 1.75rem;
+  font-size: var(--font-size-title);
   font-weight: 700;
-  color: #1f1283;
+  color: var(--color-text-primary);
   margin: 0;
 }
 
@@ -424,10 +424,10 @@ onMounted(() => {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #1f1283;
+  color: var(--color-text-primary);
   text-decoration: none;
   padding: 0.5rem 1rem 0.5rem 0;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   transition: all 0.2s ease;
   font-weight: 500;
 }

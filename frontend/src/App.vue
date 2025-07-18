@@ -113,7 +113,7 @@ input:focus, textarea:focus, select:focus {
 }
 
 .container {
-  max-width: 1860px;
+  max-width: var(--container-max-width);
   padding: 0 var(--spacing-2xl);
   margin: 0 auto;
 }

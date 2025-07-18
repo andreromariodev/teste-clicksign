@@ -14,7 +14,7 @@ a,
   padding: var(--spacing-xs);
 }
 
-@media (min-width: 1024px) {
+@media (min-width: var(--media-tablet)) {
   body {
     display: flex;
     place-items: center;

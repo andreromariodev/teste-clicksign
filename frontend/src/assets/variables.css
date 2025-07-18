@@ -38,6 +38,9 @@
   --color-error: #ef4444;
   --color-error-bg: #fef2f2;
   --color-error-text: #dc2626;
+  --color-info: #1e1b4b;
+  --color-spinner-bg: #f3f4f6;
+  --color-gray-light: #6b7280;
 
   /* Colors - Interactive */
   --color-hover: #f9fafb;
@@ -75,6 +78,7 @@
   --font-size-2xl: 1.5rem;     /* 24px */
   --font-size-3xl: 1.875rem;   /* 30px */
   --font-size-4xl: 2.25rem;    /* 36px */
+  --font-size-title: 1.75rem;  /* 28px */
 
   /* Typography - Font Weight */
   --font-weight-normal: 400;
@@ -137,4 +141,46 @@
   /* Project Card Specific */
   --project-card-height: 400px;
   --project-card-cover-height: 232px;
+
+  /* Additional colors and values */
+  --color-primary-rgb: 105, 92, 205; /* RGB values for rgba usage */
+  --color-primary-hover: #b2a8ff;
+  --color-text-primary-alt: #1F1283;
+  --color-white: #ffffff;
+  --color-background-white: #fff;
+
+  /* Layout specific */
+  --container-max-width: 1860px;
+  --section-padding-vertical: 2rem;
+  --gap-small: 16px;
+  --gap-medium: 32px;
+  --gap-large: 60px;
+
+  /* Form specific */
+  --form-padding: 11px 16px;
+  --form-padding-small: 9px 27px;
+  --form-min-width: 180px;
+  --form-border-radius-large: 30px;
+
+  /* Toggle specific */
+  --toggle-width: 3rem;
+  --toggle-height: 1.5rem;
+  --toggle-button-size: 0.75rem;
+  --toggle-button-offset: 6px;
+  --toggle-button-offset-checked: calc(100% - 1.25rem - 2px);
+
+  /* Spinner specific */
+  --spinner-size: 40px;
+  --spinner-border-width: 3px;
+
+  /* Empty state specific */
+  --empty-state-title-size: 24px;
+  --empty-state-btn-size: 22px;
+  --empty-state-max-width: 400px;
+  --empty-state-margin-top: 60px;
+  --empty-state-min-height: 80vh;
+
+  /* Media queries */
+  --media-mobile: 768px;
+  --media-tablet: 1024px;
 }

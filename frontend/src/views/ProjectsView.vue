@@ -338,7 +338,7 @@ onMounted(async () => {
 .topFilters {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: var(--gap-medium);
 }
 
 .favoritesToggle {
@@ -355,7 +355,7 @@ onMounted(async () => {
 
 .toggleText {
   position: relative;
-  padding-left: 3rem;
+  padding-left: var(--toggle-width);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
   color: var(--color-text-secondary);
@@ -367,26 +367,26 @@ onMounted(async () => {
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  width: 3rem;
-  height: 1.5rem;
+  width: var(--toggle-width);
+  height: var(--toggle-height);
   background: var(--color-background-dark);
   border: 2px solid var(--color-background-dark);
-  border-radius: 1rem;
+  border-radius: var(--toggle-height);
   transition: var(--transition-all);
 }
 
 .toggleText::after {
   content: '';
   position: absolute;
-  left: 6px;
+  left: var(--toggle-button-offset);
   top: 50%;
   transform: translateY(-50%);
-  width: 0.75rem;
-  height: 0.75rem;
+  width: var(--toggle-button-size);
+  height: var(--toggle-button-size);
   background: var(--color-text-white);
   border-radius: 50%;
   transition: var(--transition-all);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-sm);
 }
 
 .checkbox:checked + .toggleText::before {
@@ -395,7 +395,7 @@ onMounted(async () => {
 }
 
 .checkbox:checked + .toggleText::after {
-  left: calc(100% - 1.25rem - 2px);
+  left: var(--toggle-button-offset-checked);
 }
 
 .sortSection {
@@ -407,11 +407,11 @@ onMounted(async () => {
   background: var(--color-background-primary);
   border: 1px solid var(--color-text-muted);
   border-radius: var(--radius-md);
-  padding: 11px 16px;
+  padding: var(--form-padding);
   font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
   cursor: pointer;
-  min-width: 180px;
+  min-width: var(--form-min-width);
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
   background-position: right 0.5rem center;
   background-repeat: no-repeat;
@@ -431,8 +431,8 @@ onMounted(async () => {
   gap: var(--spacing-sm);
   background: var(--color-primary);
   color: var(--color-text-white);
-  padding: 9px 27px;
-  border-radius: 30px;
+  padding: var(--form-padding-small);
+  border-radius: var(--form-border-radius-large);
   text-decoration: none;
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-medium);
@@ -441,7 +441,7 @@ onMounted(async () => {
 }
 
 .newProjectBtn:hover {
-  background: #b2a8ff;
+  background: var(--color-primary-hover);
 }
 
 .searchSection {
@@ -464,10 +464,10 @@ onMounted(async () => {
 }
 
 .spinner {
-  width: 40px;
-  height: 40px;
-  border: 3px solid var(--color-background-muted);
-  border-top: 3px solid var(--color-primary);
+  width: var(--spinner-size);
+  height: var(--spinner-size);
+  border: var(--spinner-border-width) solid var(--color-background-muted);
+  border-top: var(--spinner-border-width) solid var(--color-primary);
   border-radius: var(--radius-round);
   animation: spin 1s linear infinite;
   margin-bottom: var(--spacing-lg);
@@ -492,10 +492,10 @@ onMounted(async () => {
 .emptyState {
   text-align: center;
   padding: var(--spacing-4xl) var(--spacing-2xl);
-  margin-top: 60px;
-  background-color: #fff;
-  min-height: 80vh;
-  border-radius: 4px;
+  margin-top: var(--empty-state-margin-top);
+  background-color: var(--color-background-white);
+  min-height: var(--empty-state-min-height);
+  border-radius: var(--radius-sm);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -510,17 +510,16 @@ onMounted(async () => {
 }
 
 .emptyTitle {
-  font-size: 24px;
+  font-size: var(--empty-state-title-size);
   font-weight: var(--font-weight-semibold);
-  color: #1F1283;
+  color: var(--color-text-primary-alt);
   margin: 0 0 var(--spacing-md);
-
 }
 
 .emptyDescription {
   color: var(--color-text-light);
   margin: 0 0 var(--spacing-2xl);
-  max-width: 400px;
+  max-width: var(--empty-state-max-width);
   margin-left: auto;
   margin-right: auto;
 }
@@ -528,20 +527,20 @@ onMounted(async () => {
 .createBtn {
   display: inline-flex;
   align-items: center;
-  gap: 16px;
+  gap: var(--gap-small);
   background: var(--color-primary);
   color: var(--color-text-white);
-  padding: 9px 27px;
-  border-radius: 30px;
+  padding: var(--form-padding-small);
+  border-radius: var(--form-border-radius-large);
   text-decoration: none;
-  font-size: 22px;
+  font-size: var(--empty-state-btn-size);
   font-weight: var(--font-weight-medium);
   transition: var(--transition-all);
   white-space: nowrap;
 }
 
 .createBtn:hover {
-  background: #b2a8ff;
+  background: var(--color-primary-hover);
 }
 
 .projectsGrid {
@@ -551,7 +550,7 @@ onMounted(async () => {
   margin: var(--spacing-2xl) 0;
 }
 
-@media (max-width: 768px) {
+@media (max-width: var(--media-mobile)) {
   .header {
     flex-direction: column;
     align-items: stretch;

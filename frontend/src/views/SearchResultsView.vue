@@ -197,7 +197,7 @@ onMounted(async () => {
 <style module>
 .searchResultsPage {
   min-height: 100vh;
-  padding: 2rem 0;
+  padding: var(--section-padding-vertical) 0;
 }
 
 .header {
@@ -209,9 +209,9 @@ onMounted(async () => {
 }
 
 .title {
-  font-size: 1.75rem;
+  font-size: var(--font-size-title);
   font-weight: 700;
-  color: #1f1283;
+  color: var(--color-text-primary);
   margin: 0;
 }
 
@@ -219,18 +219,18 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #1f1283;
+  color: var(--color-text-primary);
   text-decoration: none;
   padding: 0.5rem 1rem 0.5rem 0;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   transition: all 0.2s ease;
   font-weight: 500;
   margin-bottom: 1rem;
 }
 
 .backBtn:hover {
-  color: #475569;
-  background-color: #f8fafc;
+  color: var(--color-text-light);
+  background-color: var(--color-background-secondary);
 }
 
 .filtersSection {
@@ -251,16 +251,16 @@ onMounted(async () => {
   gap: 0.5rem;
   cursor: pointer;
   font-weight: 500;
-  color: #374151;
+  color: var(--color-text-secondary);
 }
 
 .checkbox {
   width: 1.25rem;
   height: 1.25rem;
-  border: 2px solid #d1d5db;
-  border-radius: 4px;
+  border: 2px solid var(--color-border-secondary);
+  border-radius: var(--radius-xs);
   cursor: pointer;
-  accent-color: #1f1283;
+  accent-color: var(--color-text-primary);
 }
 
 .toggleText {
@@ -275,8 +275,8 @@ onMounted(async () => {
 
 .sortSelect {
   padding: 0.5rem 1rem;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
+  border: 1px solid var(--color-border-secondary);
+  border-radius: var(--radius-md);
   font-size: 0.875rem;
   cursor: pointer;
   background-color: white;
@@ -284,24 +284,24 @@ onMounted(async () => {
 
 .sortSelect:focus {
   outline: none;
-  border-color: #1f1283;
+  border-color: var(--color-text-primary);
 }
 
 .newProjectBtn {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background-color: #1f1283;
+  background-color: var(--color-text-primary);
   color: white;
   text-decoration: none;
   padding: 0.75rem 1.5rem;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   font-weight: 500;
   transition: all 0.2s ease;
 }
 
 .newProjectBtn:hover {
-  background-color: #1e1b4b;
+  background-color: var(--color-info);
 }
 
 .loading {
@@ -315,10 +315,10 @@ onMounted(async () => {
 }
 
 .spinner {
-  width: 40px;
-  height: 40px;
-  border: 4px solid #f3f4f6;
-  border-top: 4px solid #1f1283;
+  width: var(--spinner-size);
+  height: var(--spinner-size);
+  border: 4px solid var(--color-spinner-bg);
+  border-top: 4px solid var(--color-text-primary);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -337,9 +337,9 @@ onMounted(async () => {
   justify-content: center;
   align-items: center;
   padding: 2rem;
-  color: #ef4444;
-  background-color: #fef2f2;
-  border-radius: 8px;
+  color: var(--color-error);
+  background-color: var(--color-error-bg);
+  border-radius: var(--radius-md);
   margin: 2rem 0;
 }
 
@@ -356,12 +356,12 @@ onMounted(async () => {
 .emptyTitle {
   font-size: 1.5rem;
   font-weight: 600;
-  color: #374151;
+  color: var(--color-text-secondary);
   margin: 0;
 }
 
 .emptyDescription {
-  color: #6b7280;
+  color: var(--color-gray-light);
   font-size: 1rem;
   margin: 0;
 }
@@ -370,11 +370,11 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background-color: #1f1283;
+  background-color: var(--color-text-primary);
   color: white;
   text-decoration: none;
   padding: 0.75rem 1.5rem;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   font-weight: 500;
   transition: all 0.2s ease;
   margin-top: 1rem;
