@@ -1,6 +1,36 @@
 - Este projeto foi desenvolvido como teste para a vaga de Desenvolvedor Front-end Sênior na Clicksign.
-- Autor: André Romário
-- Portfólio: http://andreromariodev.github.io/
+- Autor: André Romá## 📋 Campos do Projeto
+
+### Estrutura dos Dados
+- **Nome do projeto** (obrigatório) - String, máximo 200 caracteres
+- **Cliente** (obrigatório) - String, máximo 200 caracteres
+- **Data de Início** (obrigatório) - Date (formato ISO 8601)
+- **Data Final** (obrigatório) - Date (formato ISO 8601, deve ser posterior à data de início)
+- **Capa do projeto** (opcional) - Imagem (JPG, PNG, máximo 5MB)
+- **Favorito** (opcional) - Boolean (padrão: false)
+
+### Exemplo de Estrutura JSON
+```json
+{
+  "_id": "507f1f77bcf86cd799439011",
+  "name": "Sistema de Gestão Empresarial",
+  "client": "Empresa Alpha Ltda",
+  "startDate": "2024-01-15T00:00:00.000Z",
+  "endDate": "2024-06-30T00:00:00.000Z",
+  "coverImage": "cover-1234567890-123456789.jpg",
+  "isFavorite": false,
+  "createdAt": "2024-01-10T10:30:00.000Z",
+  "updatedAt": "2024-01-10T10:30:00.000Z"
+}
+```
+
+### Validações
+- **Nome**: Obrigatório, não pode estar vazio
+- **Cliente**: Obrigatório, não pode estar vazio
+- **Data de Início**: Obrigatória, deve ser uma data válida
+- **Data Final**: Obrigatória, deve ser posterior à data de início
+- **Capa**: Opcional, formatos aceitos: JPG, PNG, máximo 5MB
+- **Favorito**: Opcional, padrão é falsertfólio: http://andreromariodev.github.io/
 - LinkedIn: https://www.linkedin.com/in/andre-romario-dev/
 
 # Gerenciador de Projetos
@@ -307,12 +337,111 @@ npm run dev
 - **Health Check**: http://localhost:3001/health
 - **Uploads**: http://localhost:3001/uploads/[filename]
 
-## 🔧 Scripts Disponíveis
+## � Alimentando a Base de Dados
+
+### Gerar Projetos de Teste
+Para facilitar o desenvolvimento e testes, o projeto inclui um script para gerar projetos de exemplo:
+
+```bash
+# Gerar 50 projetos de teste automaticamente
+./generate-test-projects.sh
+
+# Ou executar manualmente
+cd backend
+npx ts-node src/scripts/generate-projects.ts
+```
+
+**O que é criado:**
+- 50 projetos com nomes variados (sistemas, apps, portais)
+- Clientes fictícios diversificados
+- Datas de início e fim aleatórias (2023-2025)
+- 30% dos projetos marcados como favoritos
+- Dados realistas para testar filtros e buscas
+
+### Adicionar Projetos Manualmente
+Você pode adicionar projetos através da interface web ou diretamente via API:
+
+#### Via Interface Web:
+1. Acesse: http://localhost:5173
+2. Clique no botão "Novo Projeto"
+3. Preencha os campos obrigatórios:
+   - Nome do projeto
+   - Cliente
+   - Data de início
+   - Data final
+4. Opcionalmente:
+   - Faça upload de uma imagem de capa
+   - Marque como favorito
+5. Clique em "Salvar"
+
+#### Via API (curl):
+```bash
+# Criar um novo projeto
+curl -X POST http://localhost:3001/api/projects \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Meu Novo Projeto",
+    "client": "Cliente Exemplo",
+    "startDate": "2024-01-15",
+    "endDate": "2024-06-30",
+    "isFavorite": false
+  }'
+
+# Com upload de imagem
+curl -X POST http://localhost:3001/api/projects \
+  -F "name=Projeto com Imagem" \
+  -F "client=Cliente ABC" \
+  -F "startDate=2024-01-01" \
+  -F "endDate=2024-12-31" \
+  -F "isFavorite=true" \
+  -F "coverImage=@/caminho/para/imagem.jpg"
+```
+
+### Limpar Base de Dados
+Para remover todos os projetos e começar do zero:
+
+```bash
+# Via MongoDB shell
+mongosh gerenciador-projetos --eval "db.projects.deleteMany({})"
+
+# Ou via script (se disponível)
+cd backend
+npx ts-node -e "
+import { ProjectModel } from './src/models/ProjectModel';
+import connectDB from './src/config/database';
+connectDB().then(() => {
+  ProjectModel.deleteMany({}).then(() => {
+    console.log('Base limpa!');
+    process.exit(0);
+  });
+});
+"
+```
+
+## �🔧 Scripts Disponíveis
 
 ### Scripts de Automação
 - `./start.sh` - Inicia projeto completo (MongoDB + Backend + Frontend)
 - `./stop.sh` - Para todos os serviços
 - `./dev.sh [comando]` - Utilitários de desenvolvimento
+- `./generate-test-projects.sh` - Gera 50 projetos de teste
+
+### Verificar Dados na Base
+Para verificar se há projetos na base de dados:
+
+```bash
+# Via API (quantidade total)
+curl http://localhost:3001/api/projects | jq '.pagination.total'
+
+# Via MongoDB shell (contar projetos)
+mongosh gerenciador-projetos --eval "db.projects.countDocuments()"
+
+# Listar alguns projetos
+mongosh gerenciador-projetos --eval "db.projects.find().limit(5).pretty()"
+
+# Via API (primeiros 5 projetos)
+curl "http://localhost:3001/api/projects?limit=5" | jq '.projects[].name'
+```
 
 ### Comandos do dev.sh
 - `./dev.sh start` - Inicia backend e frontend
