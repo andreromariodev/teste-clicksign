@@ -176,36 +176,6 @@
 
             <div v-if="isDropdownOpen" :class="$style.dropdownMenu">
               <router-link
-                :to="`/projects/${project.id}`"
-                :class="$style.dropdownItem"
-                @click="closeDropdown"
-              >
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M1 12S5 4 12 4S23 12 23 12S19 20 12 20S1 12 1 12Z"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    fill="none"
-                  />
-                  <circle
-                    cx="12"
-                    cy="12"
-                    r="3"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    fill="none"
-                  />
-                </svg>
-                Ver
-              </router-link>
-
-              <router-link
                 :to="`/projects/${project.id}/edit`"
                 :class="$style.dropdownItem"
                 @click="closeDropdown"

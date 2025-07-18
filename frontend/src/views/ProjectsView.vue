@@ -2,8 +2,7 @@
   <AppLayout>
     <div class="container">
       <div :class="$style.projectsPage">
-        <!-- Header -->
-        <div :class="$style.header">
+        <div v-if="hasProjects" :class="$style.header">
           <div :class="$style.titleSection">
             <h1 :class="$style.title">Projetos ({{ totalProjects }})</h1>
           </div>
@@ -50,54 +49,44 @@
           </div>
         </div>
 
-        <!-- Loading State -->
         <div v-if="loading" :class="$style.loading">
           <div :class="$style.spinner"></div>
           <p>Carregando projetos...</p>
         </div>
 
-        <!-- Error State -->
         <div v-else-if="error" :class="$style.error">
           {{ error }}
         </div>
 
-        <!-- Empty State -->
         <div v-else-if="!hasProjects && !loading" :class="$style.emptyState">
-          <div :class="$style.emptyIcon">
+          <h3 :class="$style.emptyTitle">
+            Nenhum projeto
+          </h3>
+          <p :class="$style.emptyDescription">
+            Clique no botão abaixo para criar o primeiro e gerenciá-lo.
+          </p>
+          <router-link to="/projects/new" :class="$style.createBtn">
             <svg
-              width="64"
-              height="64"
+              width="24"
+              height="24"
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M9 12H15M9 16H15M17 21H7C5.89543 21 5 20.1046 5 19V5C5 3.89543 5.89543 3 7 3H12.5858C12.851 3 13.1054 3.10536 13.2929 3.29289L19.7071 9.70711C19.8946 9.89464 20 10.149 20 10.4142V19C20 20.1046 19.1046 21 18 21H17ZM17 21V10L12 5"
-                stroke="currentColor"
-                stroke-width="2"
+                d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                stroke="white"
+                stroke-linecap="round"
+                stroke-linejoin="round"
               />
+              <path d="M12 8V16" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M8 12H16" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
-          </div>
-          <h3 :class="$style.emptyTitle">
-            {{
-              searchTerm || onlyFavorites
-                ? 'Nenhum projeto encontrado'
-                : 'Nenhum projeto cadastrado'
-            }}
-          </h3>
-          <p :class="$style.emptyDescription">
-            {{
-              searchTerm || onlyFavorites
-                ? 'Tente ajustar os filtros ou criar um novo projeto.'
-                : 'Comece criando seu primeiro projeto.'
-            }}
-          </p>
-          <router-link to="/projects/new" :class="$style.createBtn">
-            Criar primeiro projeto
+
+            <span>Novo projeto</span>
           </router-link>
         </div>
 
-        <!-- Projects Grid -->
         <div v-else :class="$style.projectsGrid">
           <ProjectCard
             v-for="project in projects"
@@ -109,7 +98,6 @@
           />
         </div>
 
-        <!-- Pagination -->
         <Pagination
           v-if="hasProjects"
           :current-page="currentPage"
@@ -122,7 +110,6 @@
           @goto="goToPage"
         />
 
-        <!-- Delete Confirmation Modal -->
         <ConfirmModal
           :show="deleteModal.show"
           :loading="deleteModal.loading"
@@ -144,7 +131,6 @@ import { ref, onMounted, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import AppLayout from '@/components/layout/AppLayout.vue'
 import ProjectCard from '@/components/project/ProjectCard.vue'
-import ProjectSearch from '@/components/project/ProjectSearch.vue'
 import Pagination from '@/components/ui/Pagination.vue'
 import ConfirmModal from '@/components/ui/ConfirmModal.vue'
 import { useProjects } from '@/composables/useProjects'
@@ -169,11 +155,9 @@ const {
   setOnlyFavorites,
   setSorting,
   setPage,
-  nextPage,
-  prevPage,
 } = useProjects()
 
-const { searchHistory, addToHistory, clearHistory } = useSearchHistory()
+const { addToHistory, clearHistory } = useSearchHistory()
 
 const searchTerm = ref('')
 const onlyFavorites = ref(false)
@@ -190,19 +174,17 @@ const onSearch = (term: string) => {
   searchTerm.value = term
   setSearch(term)
 
-  // Adicionar ao histórico se tiver pelo menos 3 caracteres
   if (term.trim().length >= 3) {
     addToHistory(term.trim())
   }
 
-  // Atualizar a URL
   const query = { ...route.query }
   if (term) {
     query.search = term
   } else {
     delete query.search
   }
-  query.page = '1' // Reset para primeira página
+  query.page = '1'
 
   router.push({ query })
 }
@@ -212,14 +194,13 @@ const onToggleFavorites = (event: Event) => {
   onlyFavorites.value = target.checked
   setOnlyFavorites(target.checked)
 
-  // Atualizar a URL
   const query = { ...route.query }
   if (target.checked) {
     query.favorites = 'true'
   } else {
     delete query.favorites
   }
-  query.page = '1' // Reset para primeira página
+  query.page = '1'
 
   router.push({ query })
 }
@@ -229,19 +210,13 @@ const onSortChange = (event: Event) => {
   sortBy.value = target.value as 'name' | 'startDate' | 'endDate'
   setSorting(sortBy.value, 'asc')
 
-  // Atualizar a URL
   const query = { ...route.query }
   query.sort = sortBy.value
-  query.page = '1' // Reset para primeira página
+  query.page = '1'
 
   router.push({ query })
 }
 
-const clearSearchHistory = () => {
-  clearHistory()
-}
-
-// Funções de navegação que atualizam a URL
 const goToPage = (page: number) => {
   const query = { ...route.query, page: page.toString() }
   router.push({ query })
@@ -287,25 +262,21 @@ const confirmDelete = async () => {
   }
 }
 
-// Observar mudanças na rota para sincronizar o estado
 watch(
   () => route.query,
   (newQuery) => {
-    // Sincronizar busca
     const searchFromUrl = (newQuery.search as string) || ''
     if (searchFromUrl !== searchTerm.value) {
       searchTerm.value = searchFromUrl
       setSearch(searchFromUrl)
     }
 
-    // Sincronizar favoritos
     const favoritesFromUrl = newQuery.favorites === 'true'
     if (favoritesFromUrl !== onlyFavorites.value) {
       onlyFavorites.value = favoritesFromUrl
       setOnlyFavorites(favoritesFromUrl)
     }
 
-    // Sincronizar ordenação
     const sortFromUrl = (newQuery.sort as string) || 'name'
     const validSorts = ['name', 'startDate', 'endDate'] as const
     const sortValue = validSorts.includes(sortFromUrl as any)
@@ -316,7 +287,6 @@ watch(
       setSorting(sortBy.value, 'asc')
     }
 
-    // Sincronizar página
     const pageFromUrl = parseInt((newQuery.page as string) || '1')
     if (pageFromUrl !== currentPage.value) {
       setPage(pageFromUrl)
@@ -326,25 +296,21 @@ watch(
 )
 
 onMounted(async () => {
-  // Inicializar valores da URL
   const query = route.query
   searchTerm.value = (query.search as string) || ''
   onlyFavorites.value = query.favorites === 'true'
 
-  // Validar sort da URL
   const sortFromUrl = (query.sort as string) || 'name'
   const validSorts = ['name', 'startDate', 'endDate'] as const
   sortBy.value = validSorts.includes(sortFromUrl as any)
     ? (sortFromUrl as 'name' | 'startDate' | 'endDate')
     : 'name'
 
-  // Aplicar os filtros
   setSearch(searchTerm.value)
   setOnlyFavorites(onlyFavorites.value)
   setSorting(sortBy.value, 'asc')
   setPage(parseInt((query.page as string) || '1'))
 
-  // Carregar projetos
   await loadProjects()
 })
 </script>
@@ -526,6 +492,14 @@ onMounted(async () => {
 .emptyState {
   text-align: center;
   padding: var(--spacing-4xl) var(--spacing-2xl);
+  margin-top: 60px;
+  background-color: #fff;
+  min-height: 80vh;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .emptyIcon {
@@ -536,10 +510,11 @@ onMounted(async () => {
 }
 
 .emptyTitle {
-  font-size: var(--font-size-2xl);
+  font-size: 24px;
   font-weight: var(--font-weight-semibold);
-  color: var(--color-text-secondary);
+  color: #1F1283;
   margin: 0 0 var(--spacing-md);
+
 }
 
 .emptyDescription {
@@ -553,19 +528,20 @@ onMounted(async () => {
 .createBtn {
   display: inline-flex;
   align-items: center;
-  gap: var(--spacing-sm);
+  gap: 16px;
   background: var(--color-primary);
   color: var(--color-text-white);
-  padding: var(--button-padding-md);
-  border-radius: var(--button-radius);
+  padding: 9px 27px;
+  border-radius: 30px;
   text-decoration: none;
+  font-size: 22px;
   font-weight: var(--font-weight-medium);
   transition: var(--transition-all);
+  white-space: nowrap;
 }
 
 .createBtn:hover {
-  background: var(--color-primary-dark);
-  transform: translateY(-1px);
+  background: #b2a8ff;
 }
 
 .projectsGrid {
