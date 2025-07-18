@@ -88,4 +88,21 @@ export class ProjectService {
     const response = await api.patch(`/projects/${id}/favorite`)
     return response.data
   }
+
+  static async uploadCoverImage(projectId: string, file: File): Promise<string> {
+    const formData = new FormData()
+    formData.append('coverImage', file)
+
+    const response = await api.post(`/projects/${projectId}/cover`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    return response.data.coverUrl
+  }
+
+  static async getSearchHistory(): Promise<string[]> {
+    const response = await api.get('/search-history')
+    return response.data
+  }
 }

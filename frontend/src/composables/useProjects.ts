@@ -64,7 +64,7 @@ export function useProjects() {
 
           if (projects.value.length === 0 && paginationInfo.value.page > 1) {
             setPage(paginationInfo.value.page - 1)
-            return
+            return updatedProject
           }
 
           paginationInfo.value.hasNextPage = paginationInfo.value.page < newTotalPages
@@ -73,6 +73,7 @@ export function useProjects() {
           projects.value[index] = updatedProject
         }
       }
+      return updatedProject
     } catch (err) {
       error.value = 'Erro ao atualizar favorito'
       showError(
@@ -80,6 +81,7 @@ export function useProjects() {
         'Não foi possível alterar o status de favorito. Tente novamente.'
       )
       console.error('Error toggling favorite:', err)
+      throw err
     }
   }
 
@@ -96,6 +98,43 @@ export function useProjects() {
         'Não foi possível excluir o projeto. Tente novamente.'
       )
       console.error('Error deleting project:', err)
+    }
+  }
+
+  const createProject = async (projectData: any) => {
+    try {
+      const createdProject = await ProjectService.createProject(projectData)
+      showSuccess('Projeto criado', 'O projeto foi criado com sucesso!')
+      await loadProjects()
+      return createdProject
+    } catch (err) {
+      error.value = 'Erro ao criar projeto'
+      showError(
+        'Erro ao criar projeto',
+        'Não foi possível criar o projeto. Verifique os dados e tente novamente.'
+      )
+      console.error('Error creating project:', err)
+      throw err
+    }
+  }
+
+  const updateProject = async (id: string, updateData: any) => {
+    try {
+      const updatedProject = await ProjectService.updateProject(id, updateData)
+      const index = projects.value.findIndex(p => p.id === id)
+      if (index !== -1) {
+        projects.value[index] = updatedProject
+      }
+      showSuccess('Projeto atualizado', 'O projeto foi atualizado com sucesso!')
+      return updatedProject
+    } catch (err) {
+      error.value = 'Erro ao atualizar projeto'
+      showError(
+        'Erro ao atualizar projeto',
+        'Não foi possível atualizar o projeto. Tente novamente.'
+      )
+      console.error('Error updating project:', err)
+      throw err
     }
   }
 
@@ -135,6 +174,7 @@ export function useProjects() {
   const totalProjects = computed(() => paginationInfo.value.total)
   const currentPage = computed(() => filters.value.page || 1)
   const totalPages = computed(() => paginationInfo.value.totalPages)
+  const canLoadMore = computed(() => paginationInfo.value.hasNextPage)
 
   watch(
     filters,
@@ -154,7 +194,10 @@ export function useProjects() {
     totalProjects,
     currentPage,
     totalPages,
+    canLoadMore,
     loadProjects,
+    createProject,
+    updateProject,
     toggleFavorite,
     deleteProject,
     setSearch,
