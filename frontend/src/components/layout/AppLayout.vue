@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import logoUrl from '@/assets/logo-projeto-sg.svg'
+import logoUrl from '@/assets/images/logo-projeto-sg.svg'
 import GlobalSearch from '@/components/ui/GlobalSearch.vue'
 </script>
 
